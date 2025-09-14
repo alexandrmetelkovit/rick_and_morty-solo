@@ -1,0 +1,16 @@
+.header {
+  width: 100%;
+  box-shadow: -2px 0 8px 2px #0000001a;
+
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    height: 60px;
+  }
+
+  &__image {
+    width: 46px;
+    height: 49px;
+  }
+}

@@ -1,4 +1,4 @@
-import './Footer.css';
+import './Footer.scss';
 
 interface IFooterProps {
   text: string;

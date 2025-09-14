@@ -5,10 +5,10 @@
   align-items: center;
   justify-content: center;
   min-height: 60px;
-}
 
-.footer__text {
-  font-family: 'Karla', sans-serif;
-  font-size: 18px;
-  font-weight: 700;
+  &__text {
+    font-family: 'Karla', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+  }
 }

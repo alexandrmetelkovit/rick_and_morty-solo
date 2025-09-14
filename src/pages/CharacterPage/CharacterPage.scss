@@ -1,0 +1,32 @@
+.character-page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 42px;
+
+  &__actions {
+    padding-top: 42px;
+  }
+
+  &__link {
+    display: inline-flex;
+    column-gap: 8px;
+    align-items: center;
+    text-decoration: none;
+    font-family: Karla, sans-serif;
+    font-weight: 700;
+    line-height: 0;
+    font-size: 18px;
+    color: #000;
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  &__body {
+    display: flex;
+    justify-content: center;
+  }
+}

@@ -1,12 +1,7 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
-import { Header } from './components/Header/Header';
-import { Footer } from './components/Footer/Footer';
-import { PageContent } from './components/PageContent/PageContent';
-import { CharactersList } from './components/pages/CharacterList/CharacterList';
-import { CharacterPage } from './components/pages/CharacterPage/CharacterPage';
-
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
+import { Footer, Header, PageContent } from './components';
+import { CharacterPage, CharactersList } from './pages';
 
 function App() {
   const textFooter = 'Made with love AlexanderMetelkov';

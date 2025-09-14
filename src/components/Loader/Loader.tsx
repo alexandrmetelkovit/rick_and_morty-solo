@@ -1,27 +1,27 @@
-import bigLoaderImg from '../../assets/images/loaders/loader-big.png';
-import smallLoaderImg from '../../assets/images/loaders/loader-small.png';
-import './Loader.css';
+import bigLoaderImg from 'assets/images/loaders/loader-big.png';
+import smallLoaderImg from 'assets/images/loaders/loader-small.png';
+import './Loader.scss';
 
 interface ILoaderProps {
   mode: 'smallLoader' | 'bigLoader';
 }
 
-export const Loader = ({ mode }: ILoaderProps) => {
-  const loaders = {
-    smallLoader: {
-      src: smallLoaderImg,
-      width: 101,
-      height: 103,
-      text: null
-    },
-    bigLoader: {
-      src: bigLoaderImg,
-      width: 475,
-      height: 465,
-      text: 'Loading character card...'
-    }
-  };
+const loaders = {
+  smallLoader: {
+    src: smallLoaderImg,
+    width: 101,
+    height: 103,
+    text: null
+  },
+  bigLoader: {
+    src: bigLoaderImg,
+    width: 475,
+    height: 465,
+    text: 'Loading character card...'
+  }
+};
 
+export const Loader = ({ mode }: ILoaderProps) => {
   const { src, width, height, text } = loaders[mode];
 
   return (

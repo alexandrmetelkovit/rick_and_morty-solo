@@ -1,5 +1,4 @@
 import type React from 'react';
-import './PageContent.css';
 
 interface IPageContenProps {
   children: React.ReactNode;
