@@ -17,10 +17,10 @@ export const CharacterPage = () => {
         <div className='character-page__actions'>
           <Link
             to='/'
-            className='character__link'
+            className='character-page__link'
           >
             <IconArrowLeftBack
-              className='character__icon'
+              className='character-page__icon'
               aria-label='Вернуться на главную'
             />
             GO BACK
