@@ -1,5 +1,5 @@
-import bigLoaderImg from 'assets/images/loaders/loader-big.png';
-import smallLoaderImg from 'assets/images/loaders/loader-small.png';
+import bigLoaderImg from '@/assets/images/loaders/loader-big.png';
+import smallLoaderImg from '@/assets/images/loaders/loader-small.png';
 import './Loader.scss';
 
 interface ILoaderProps {

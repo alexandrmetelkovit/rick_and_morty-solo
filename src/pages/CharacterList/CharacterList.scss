@@ -9,6 +9,8 @@
     margin: 0 auto;
 
     &-image {
+      max-width: 600px;
+      max-height: 200px;
       width: 100%;
       height: auto;
     }

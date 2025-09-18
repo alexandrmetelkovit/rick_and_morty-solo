@@ -1,7 +1,7 @@
-import bannerImg from 'assets/images/page-content/banner.png';
+import bannerImg from '@/assets/images/page-content/banner.png';
+import { Loader } from '@/components/Loader/Loader';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Loader } from '../../components/Loader/Loader';
 import './CharacterList.scss';
 
 export const CharactersList = () => {
@@ -17,8 +17,6 @@ export const CharactersList = () => {
         <img
           className='characters__banner-image'
           src={bannerImg}
-          width={600}
-          height={200}
           loading='lazy'
         />
       </div>

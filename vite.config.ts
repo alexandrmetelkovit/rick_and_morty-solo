@@ -6,10 +6,7 @@ export default defineConfig({
   plugins: [react(), svgr()],
   resolve: {
     alias: {
-      components: '/src/components',
-      widgets: '/src/widgets',
-      pages: '/src/pages',
-      assets: '/src/assets'
+      '@': '/src'
     }
   }
 });

@@ -1,7 +1,7 @@
-import IconArrowLeftBack from 'assets/icons/arrow_back.svg?react';
+import IconArrowLeftBack from '@/assets/icons/arrow_back.svg?react';
+import { Loader } from '@/components/Loader/Loader';
 import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Loader } from '../../components/Loader/Loader';
 import './CharacterPage.scss';
 
 export const CharacterPage = () => {
