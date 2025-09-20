@@ -8,6 +8,12 @@
     animation: spin 10s linear infinite;
   }
 
+  &__text {
+    font-family: Karla, sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
   @keyframes spin {
     from {
       transform: rotate(0deg);
@@ -16,11 +22,5 @@
     to {
       transform: rotate(360deg);
     }
-  }
-
-  &__text {
-    font-family: Karla, sans-serif;
-    font-size: 18px;
-    font-weight: 700;
   }
 }

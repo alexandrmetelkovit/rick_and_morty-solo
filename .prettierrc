@@ -8,6 +8,5 @@
   "semi": true,
   "arrowParens": "always",
   "bracketSpacing": true,
-  "endOfLine": "lf",
-  "plugins": ["prettier-plugin-organize-imports"]
+  "endOfLine": "lf"
 }

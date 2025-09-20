@@ -1,16 +1,8 @@
-import bannerImg from '@/assets/images/page-content/banner.png';
 import { Loader } from '@/components/Loader/Loader';
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import bannerImg from '@/assets/images/page-content/banner.png';
 import './CharacterList.scss';
 
 export const CharactersList = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    console.log('Current location is ', location);
-  }, [location]);
-
   return (
     <div className='characters container'>
       <div className='characters__banner'>

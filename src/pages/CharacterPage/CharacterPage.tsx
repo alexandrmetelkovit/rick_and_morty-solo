@@ -1,16 +1,11 @@
-import IconArrowLeftBack from '@/assets/icons/arrow_back.svg?react';
+import { Link } from 'react-router-dom';
+
 import { Loader } from '@/components/Loader/Loader';
-import { useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import IconArrowLeftBack from '@/assets/icons/arrow_back.svg?react';
+
 import './CharacterPage.scss';
 
 export const CharacterPage = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    console.log('Current location is ', location);
-  }, [location]);
-
   return (
     <>
       <div className='character-page container'>
