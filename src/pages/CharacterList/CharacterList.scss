@@ -1,0 +1,30 @@
+.characters {
+  display: grid;
+  row-gap: 16px;
+  padding-block: 16px;
+
+  &__banner {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+
+    &-image {
+      max-width: 600px;
+      max-height: 200px;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  &__body {
+    display: grid;
+    row-gap: 16px;
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    justify-content: space-between;
+  }
+}
