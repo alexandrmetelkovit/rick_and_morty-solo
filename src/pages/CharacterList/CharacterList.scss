@@ -17,8 +17,9 @@
   }
 
   &__body {
-    display: grid;
-    row-gap: 16px;
+    display: flex;
+    column-gap: 25px;
+    justify-content: center;
   }
 
   &__list {

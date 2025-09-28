@@ -1,4 +1,4 @@
-import cardImage from 'assets/images/rick.jpg';
+import cardImage from '@/assets/images/rick.jpg';
 
 import './CharacterCard.scss';
 
