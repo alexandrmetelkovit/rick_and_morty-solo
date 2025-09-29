@@ -11,11 +11,11 @@ const STATUS_COLORS = {
 export type TStatusesType = keyof typeof STATUS_COLORS;
 
 export interface ICircleStatusProps {
-  status?: TStatusesType;
+  status: TStatusesType;
 }
 
 export const CircleStatus = ({ status = 'Unknown' }: ICircleStatusProps) => {
   const color = STATUS_COLORS[status];
 
-  return color ? <div className={classNames('circle-status', color)} /> : null;
+  return <div className={classNames('circle-status', color)} />;
 };

@@ -74,7 +74,7 @@ export const Select = ({
   return (
     <div
       className={classNames('select', {
-        'select--small': mode === 'small'
+        select_small: mode === 'small'
       })}
       ref={componentRef}
     >
@@ -83,14 +83,15 @@ export const Select = ({
         className='select__button'
         onClick={handleShowFilterOptions}
       >
-        {mode === 'small' ? (
-          <SelectOptionComponent value={selectedOption?.label || value} />
-        ) : (
-          <SelectOptionComponent value={selectedOption?.label || placeholder} />
-        )}
+        <SelectOptionComponent
+          value={
+            mode === 'small' ? selectedOption?.label || value : placeholder
+          }
+        />
+
         <IconArrowDownFilter
           className={classNames('select__icon', {
-            'select__icon--active': isOpenList
+            select__icon_active: isOpenList
           })}
         />
       </button>

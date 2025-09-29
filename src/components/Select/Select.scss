@@ -4,7 +4,7 @@
   background-color: #fff;
   position: relative;
 
-  &--small {
+  &_small {
     width: 94px;
     max-height: 21px;
   }
@@ -21,10 +21,10 @@
     cursor: pointer;
     font-family: 'Roboto', 'sans-serif';
     font-size: 16px;
-    color: #00000099;
+    color: black;
     user-select: none;
 
-    .select--small & {
+    .select_small & {
       font-size: 14px;
       padding: 2px 5px;
       height: 21px;
@@ -36,11 +36,11 @@
     height: 24px;
     transition: 0.2s all ease-in;
 
-    .select--small & {
+    .select_small & {
       width: 10px;
     }
 
-    &--active {
+    &_active {
       transform: rotate(180deg);
     }
   }
@@ -56,7 +56,7 @@
     z-index: 100;
     background-color: inherit;
 
-    .select--small & {
+    .select_small & {
       top: calc(100% + 7px);
       row-gap: 0px;
     }
@@ -70,7 +70,7 @@
     cursor: pointer;
     width: 100%;
 
-    .select--small & {
+    .select_small & {
       display: flex;
       column-gap: 5px;
       align-items: center;
