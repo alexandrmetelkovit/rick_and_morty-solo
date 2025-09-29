@@ -1,0 +1,87 @@
+.select {
+  width: 240px;
+  max-height: 56px;
+  background-color: #fff;
+  position: relative;
+
+  &_small {
+    width: 94px;
+    max-height: 21px;
+  }
+
+  &__button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px;
+    width: 100%;
+    border: 1px solid #393939;
+    border-radius: 6px;
+    background-color: #fff;
+    cursor: pointer;
+    font-family: 'Roboto', 'sans-serif';
+    font-size: 16px;
+    color: black;
+    user-select: none;
+
+    &_small {
+      font-size: 14px;
+      padding: 2px 5px;
+      height: 21px;
+    }
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+    transition: 0.2s all ease-in;
+
+    &_small {
+      width: 10px;
+    }
+
+    &_active {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__list {
+    position: absolute;
+    top: calc(100% + 8px);
+    width: 100%;
+    display: grid;
+    row-gap: 2px;
+    border: 1px solid #393939;
+    border-radius: 6px;
+    z-index: 100;
+    background-color: inherit;
+
+    &_small {
+      top: calc(100% + 7px);
+      row-gap: 0px;
+    }
+  }
+
+  &__item {
+    padding: 14px;
+    font-size: 16px;
+    color: #00000099;
+    user-select: none;
+    cursor: pointer;
+    width: 100%;
+
+    &_small {
+      display: flex;
+      column-gap: 5px;
+      align-items: center;
+      font-size: 14px;
+      height: 17px;
+      padding: 5px;
+    }
+
+    &:hover,
+    &:focus {
+      background-color: #56c47e;
+    }
+  }
+}
