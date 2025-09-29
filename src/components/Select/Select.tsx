@@ -80,14 +80,20 @@ export const Select = ({
     >
       <button
         type='button'
-        className='select__button'
+        className={classNames('select__button', {
+          select__button_small: mode === 'small'
+        })}
         onClick={handleShowFilterOptions}
       >
-        <SelectOptionComponent
-          value={
-            mode === 'small' ? selectedOption?.label || value : placeholder
-          }
-        />
+        {mode === 'small' ? (
+          <SelectOptionComponent
+            value={
+              mode === 'small' ? selectedOption?.label || value : placeholder
+            }
+          />
+        ) : (
+          selectedOption?.label || placeholder
+        )}
 
         <IconArrowDownFilter
           className={classNames('select__icon', {
@@ -97,11 +103,17 @@ export const Select = ({
       </button>
 
       {isOpenList && options.length && (
-        <ol className='select__list'>
+        <ol
+          className={classNames('select__list', {
+            select__list_small: mode === 'small'
+          })}
+        >
           {options.map((option) => (
             <li
               key={option.value}
-              className='select__item'
+              className={classNames('select__item', {
+                select__item_small: mode === 'small'
+              })}
               onClick={() => {
                 handleOptionClickSave(option);
               }}
