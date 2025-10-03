@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 
-import classNames from 'classnames';
-
 import IconArrowDownFilter from '@/assets/icons/arrow_filter-down.svg?react';
 
 import './Select.scss';
+import { cn } from '@/shared/lib/helper';
 
 export interface IPropsOptions {
   label: string;
@@ -42,7 +41,7 @@ export const Select = ({
   const [selectedOption, setSelectedOption] = useState<IPropsOptions | null>(
     null
   );
-  const componentRef = useRef<HTMLDivElement>(null);
+  const componentRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -73,14 +72,14 @@ export const Select = ({
 
   return (
     <div
-      className={classNames('select', {
+      className={cn('select', {
         select_small: mode === 'small'
       })}
       ref={componentRef}
     >
       <button
         type='button'
-        className={classNames('select__button', {
+        className={cn('select__button', {
           select__button_small: mode === 'small'
         })}
         onClick={handleShowFilterOptions}
@@ -96,22 +95,23 @@ export const Select = ({
         )}
 
         <IconArrowDownFilter
-          className={classNames('select__icon', {
+          className={cn('select__icon', {
+            select__icon_small: mode == 'small',
             select__icon_active: isOpenList
           })}
         />
       </button>
 
-      {isOpenList && options.length && (
+      {isOpenList && options.length > 0 && (
         <ol
-          className={classNames('select__list', {
+          className={cn('select__list', {
             select__list_small: mode === 'small'
           })}
         >
           {options.map((option) => (
             <li
               key={option.value}
-              className={classNames('select__item', {
+              className={cn('select__item', {
                 select__item_small: mode === 'small'
               })}
               onClick={() => {
