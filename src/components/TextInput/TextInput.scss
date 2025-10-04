@@ -1,0 +1,37 @@
+.textInput {
+  width: 240px;
+  height: 56px;
+  border-radius: 6px;
+  padding: 16px;
+  background-color: #ffffff;
+
+  &_bordered {
+    border: 1px solid #393939;
+  }
+
+  &_underline {
+    border: none;
+  }
+
+  &-inner {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  &__input {
+    width: 100%;
+    max-width: 176px;
+    height: 24px;
+
+    &_underline {
+      padding-left: 2px;
+      border-bottom: 1px solid black;
+    }
+  }
+}
