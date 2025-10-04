@@ -5,11 +5,11 @@
   padding: 16px;
   background-color: #ffffff;
 
-  &_filterInput {
+  &_bordered {
     border: 1px solid #393939;
   }
 
-  &_cardInput {
+  &_underline {
     border: none;
   }
 
@@ -28,9 +28,8 @@
     width: 100%;
     max-width: 176px;
     height: 24px;
-    font-weight: 500;
 
-    &_cardInput {
+    &_underline {
       padding-left: 2px;
       border-bottom: 1px solid black;
     }

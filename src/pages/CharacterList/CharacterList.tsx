@@ -13,10 +13,6 @@ import {
 import './CharacterList.scss';
 
 export const CharactersList = () => {
-  const placeholderSpecies = 'Species';
-  const placeholderStatus = 'Alive';
-  const placeholderTextInput = 'Filter by name...';
-
   return (
     <div className='characters container'>
       <div className='characters__banner'>
@@ -29,23 +25,23 @@ export const CharactersList = () => {
 
       <div className='characters__body'>
         <TextInput
-          placeholder={placeholderTextInput}
-          mode='filterInput'
+          placeholder='Filter by name...'
+          mode='bordered'
         />
         <TextInput
-          placeholder={placeholderTextInput}
-          mode='cardInput'
+          placeholder='Filter by name...'
+          mode='underline'
         />
 
         <Select
           mode='default'
-          placeholder={placeholderSpecies}
+          placeholder='Species'
           options={SPECIES_OPTIONS}
         />
 
         <Select
           mode='small'
-          placeholder={placeholderStatus}
+          placeholder='Alive'
           options={STATUS_OPTIONS}
           SelectOptionComponent={({ value }) => (
             <>
