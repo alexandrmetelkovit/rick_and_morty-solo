@@ -1,6 +1,10 @@
+import { TextInput } from '@/components';
 import { Select } from '@/components/Select/Select';
 import bannerImg from '@/assets/images/page-content/banner.png';
-import { SPECIES_OPTIONS, STATUS_OPTIONS } from '@/constants/filterOptions';
+import {
+  SPECIES_OPTIONS,
+  STATUS_OPTIONS
+} from '@/shared/constants/filterOptions';
 import {
   CircleStatus,
   type TStatusesType
@@ -9,8 +13,6 @@ import {
 import './CharacterList.scss';
 
 export const CharactersList = () => {
-  const placeholderSpecies = 'Species';
-
   return (
     <div className='characters container'>
       <div className='characters__banner'>
@@ -22,9 +24,18 @@ export const CharactersList = () => {
       </div>
 
       <div className='characters__body'>
+        <TextInput
+          placeholder='Filter by name...'
+          mode='bordered'
+        />
+        <TextInput
+          placeholder='Filter by name...'
+          mode='underline'
+        />
+
         <Select
           mode='default'
-          placeholder={placeholderSpecies}
+          placeholder='Species'
           options={SPECIES_OPTIONS}
         />
 

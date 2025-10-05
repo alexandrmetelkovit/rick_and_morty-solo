@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import { cn } from '@/shared/lib/helper';
 
 import './CircleStatus.scss';
 
@@ -17,5 +17,5 @@ export interface ICircleStatusProps {
 export const CircleStatus = ({ status = 'Unknown' }: ICircleStatusProps) => {
   const color = STATUS_COLORS[status];
 
-  return <div className={classNames('circle-status', color)} />;
+  return <div className={cn('circleStatus', color)} />;
 };
