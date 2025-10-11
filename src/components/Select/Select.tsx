@@ -67,7 +67,7 @@ export const Select = ({
   const handleOptionClickSave = (option: IPropsOptions) => {
     setSelectedOption(option);
     setIsOpenList(false);
-    onChange?.(option.value);
+    onChange?.(option.label);
   };
 
   return (

@@ -27,7 +27,7 @@
 
     &_small {
       font-size: 14px;
-      padding: 2px 5px;
+      padding: 5px;
       height: 21px;
     }
   }
@@ -59,7 +59,7 @@
 
     &_small {
       top: calc(100% + 7px);
-      row-gap: 5px;
+      row-gap: 0;
     }
   }
 
@@ -70,15 +70,13 @@
     user-select: none;
     cursor: pointer;
     width: 100%;
-    padding: 10px 14px;
 
     &_small {
       display: flex;
       align-items: center;
       column-gap: 5px;
-      padding: 5px;
       font-size: 14px;
-      max-height: 17px;
+      padding: 0px 5px;
     }
 
     &:hover,

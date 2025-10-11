@@ -2,17 +2,24 @@ import { TextInput } from '@/components';
 import { Select } from '@/components/Select/Select';
 import bannerImg from '@/assets/images/page-content/banner.png';
 import {
+  GENDER_OPTIONS,
   SPECIES_OPTIONS,
   STATUS_OPTIONS
 } from '@/shared/constants/filterOptions';
-import {
-  CircleStatus,
-  type TStatusesType
-} from '@/components/CircleStatus/CircleStatus';
 
 import './CharacterList.scss';
+import { CharacterCard } from '@/widgets/CharacterCard/CharacterCard';
 
 export const CharactersList = () => {
+  const rick = {
+    name: 'Rick Sanchez',
+    gender: 'Male',
+    species: 'Human',
+    location: 'Earth',
+    status: 'Alive',
+    value: 'Alive'
+  };
+
   return (
     <div className='characters container'>
       <div className='characters__banner'>
@@ -24,33 +31,41 @@ export const CharactersList = () => {
       </div>
 
       <div className='characters__body'>
-        <TextInput
-          placeholder='Filter by name...'
-          mode='bordered'
-        />
-        <TextInput
-          placeholder='Filter by name...'
-          mode='underline'
-        />
+        <div className='characters__filters'>
+          <TextInput
+            placeholder='Filter by name...'
+            mode='bordered'
+          />
 
-        <Select
-          mode='default'
-          placeholder='Species'
-          options={SPECIES_OPTIONS}
-        />
+          <Select
+            mode='default'
+            placeholder='Species'
+            options={SPECIES_OPTIONS}
+          />
+          <Select
+            mode='default'
+            placeholder='Gender'
+            options={GENDER_OPTIONS}
+          />
 
-        <Select
-          mode='small'
-          placeholder='Alive'
-          options={STATUS_OPTIONS}
-          SelectOptionComponent={({ value }) => (
-            <>
-              {value}
-              <CircleStatus status={value as TStatusesType} />
-            </>
-          )}
-        />
-        <div className='characters__list'></div>
+          <Select
+            mode='default'
+            placeholder='Status'
+            options={STATUS_OPTIONS}
+            SelectOptionComponent={({ value }) => <>{value}</>}
+          />
+        </div>
+
+        <div className='characters__list'>
+          <CharacterCard
+            name={rick.name}
+            gender={rick.gender}
+            species={rick.species}
+            location={rick.location}
+            status={rick.status}
+            value={rick.value}
+          />
+        </div>
       </div>
     </div>
   );
