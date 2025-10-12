@@ -14,7 +14,7 @@ export interface ICircleStatusProps {
   status: TStatusesType;
 }
 
-export const CircleStatus = ({ status = 'Unknown' }: ICircleStatusProps) => {
+export const CircleStatus = ({ status }: ICircleStatusProps) => {
   const color = STATUS_COLORS[status];
 
   return <div className={cn('circleStatus', color)} />;

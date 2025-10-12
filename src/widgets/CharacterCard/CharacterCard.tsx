@@ -2,7 +2,9 @@ import { useState } from 'react';
 
 import { Link } from 'react-router-dom';
 
+import { cn } from '@/shared/lib/helper';
 import cardImage from '@/assets/images/rick.jpg';
+import { STATUS_OPTIONS } from '@/shared/constants';
 import IconCloseCharacterCard from '@/assets/icons/close.svg?react';
 import IconEditCharacterCard from '@/assets/icons/edit-card.svg?react';
 import IconConfirmCharacterCard from '@/assets/icons/confirm.svg?react';
@@ -14,8 +16,6 @@ import {
 } from '@/components';
 
 import './CharacterCard.scss';
-import { STATUS_OPTIONS } from '@/shared/constants';
-import { cn } from '@/shared/lib/helper';
 
 export interface ICharacterCardProps {
   name: string;
@@ -23,7 +23,6 @@ export interface ICharacterCardProps {
   species: string;
   location: string;
   status: string;
-  value: string;
 }
 
 export const CharacterCard = ({
@@ -35,34 +34,35 @@ export const CharacterCard = ({
 }: ICharacterCardProps) => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
 
-  const [currentName, setCurrentName] = useState(name);
-  const [currentLocation, setCurrentLocation] = useState(location);
-  const [statusValue, setStatusValue] = useState(status);
+  const [currentName, setCurrentName] = useState<string>(name);
+  const [currentLocation, setCurrentLocation] = useState<string>(location);
+  const [statusValue, setStatusValue] = useState<string>(status);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentName(e.target.value);
   };
+
   const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentLocation(e.target.value);
-  };
-  const handleStatusChange = (option: string) => {
-    setStatusValue(option);
   };
 
   const handleOpenChangeCard = () => {
     setIsEdit(true);
   };
+
   const handleConfirmChangeCard = () => {
     setIsEdit(false);
   };
-  const handleCloseChangeCard = () => {
-    setIsEdit(false);
+
+  const handleStatusChange = ({ label }: { label: string }) => {
+    setStatusValue(label);
   };
+
   const handleCancelChangeCard = () => {
     setIsEdit(false);
     setCurrentName(name);
     setCurrentLocation(location);
-    setStatusValue(status);
+    setStatusValue(statusValue);
   };
 
   return (
@@ -72,56 +72,56 @@ export const CharacterCard = ({
           characterCard_edit: isEdit
         })}
       >
-        <div className='characterCard__image'>
+        <div className='characterCard__imageWrapper'>
           <img
             src={cardImage}
-            alt='Картинка Рик Санчез'
+            alt='Rick Sanchez photo'
+            loading='lazy'
+            className='characterCard__image'
           />
         </div>
 
         <div className='characterCard__body'>
           <div className='characterCard__header'>
-            {!isEdit ? (
-              <div className='characterCard__name'>
+            <div className='characterCard__name'>
+              {!isEdit ? (
                 <Link to={'/character'}>{currentName}</Link>
-              </div>
-            ) : (
-              <div className='characterCard__name'>
+              ) : (
                 <TextInput
                   mode='underlined'
                   onChange={handleNameChange}
                   value={currentName}
                 />
-              </div>
-            )}
+              )}
+            </div>
 
             <div className='characterCard__actions'>
               {!isEdit ? (
                 <>
-                  <button className='characterCard__button-cancel'>
+                  <button className='characterCard__button'>
                     <IconCloseCharacterCard
-                      aria-label='Сбросить изменения'
-                      onClick={handleCancelChangeCard}
+                      aria-label='Close the card'
+                      onClick={handleConfirmChangeCard}
                     />
                   </button>
-                  <button className='characterCard__button-edit'>
+                  <button className='characterCard__button'>
                     <IconEditCharacterCard
-                      aria-label='Редактировать карточку'
+                      aria-label='Edit card'
                       onClick={handleOpenChangeCard}
                     />
                   </button>
                 </>
               ) : (
                 <>
-                  <button className='characterCard__button-close'>
+                  <button className='characterCard__button'>
                     <IconCloseCharacterCard
-                      aria-label='Закрыть редактирование'
-                      onClick={handleCloseChangeCard}
+                      aria-label='Cancel card changes'
+                      onClick={handleCancelChangeCard}
                     />
                   </button>
-                  <button className='characterCard__button-confirm'>
+                  <button className='characterCard__button'>
                     <IconConfirmCharacterCard
-                      aria-label='Подтвердить изменения'
+                      aria-label='Confirm changed'
                       onClick={handleConfirmChangeCard}
                     />
                   </button>
@@ -130,18 +130,18 @@ export const CharacterCard = ({
             </div>
           </div>
 
-          <ol className='characterCard__list'>
-            <li className='characterCard__item'>
+          <div className='characterCard__list'>
+            <div className='characterCard__item'>
               <p className='characterCard__title'>Gender</p>
               <span className='characterCard__option'>{gender}</span>
-            </li>
+            </div>
 
-            <li className='characterCard__item'>
+            <div className='characterCard__item'>
               <p className='characterCard__title'>Species</p>
               <span className='characterCard__option'>{species}</span>
-            </li>
+            </div>
 
-            <li className='characterCard__item'>
+            <div className='characterCard__item'>
               <p className='characterCard__title'>Location</p>
 
               {!isEdit ? (
@@ -155,9 +155,9 @@ export const CharacterCard = ({
                   />
                 </span>
               )}
-            </li>
+            </div>
 
-            <li className='characterCard__item'>
+            <div className='characterCard__item'>
               <p className='characterCard__title'>Status</p>
 
               <span className='characterCard__option'>
@@ -168,21 +168,23 @@ export const CharacterCard = ({
                   </>
                 ) : (
                   <Select
-                    mode={'small'}
+                    mode='small'
                     options={STATUS_OPTIONS}
                     value={statusValue}
                     onChange={handleStatusChange}
-                    SelectOptionComponent={({ value }) => (
-                      <>
-                        {value}
-                        <CircleStatus status={value as TStatusesType} />
-                      </>
-                    )}
+                    SelectOptionComponent={({ value }) => {
+                      return (
+                        <>
+                          {value}
+                          <CircleStatus status={value as TStatusesType} />
+                        </>
+                      );
+                    }}
                   />
                 )}
               </span>
-            </li>
-          </ol>
+            </div>
+          </div>
         </div>
       </div>
     </>

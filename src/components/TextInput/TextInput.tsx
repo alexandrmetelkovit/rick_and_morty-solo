@@ -1,5 +1,4 @@
 import { cn } from '@/shared/lib/helper';
-import IconSearchTextInput from '@/assets/icons/search_icon.svg?react';
 
 import './TextInput.scss';
 
@@ -8,13 +7,15 @@ export interface ITextInputProps {
   mode?: 'bordered' | 'underlined';
   placeholder?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  IconComponent?: React.FC<React.SVGProps<SVGSVGElement>>;
 }
 
 export const TextInput = ({
-  mode,
+  mode = 'bordered',
   placeholder,
   value,
-  onChange
+  onChange,
+  IconComponent
 }: ITextInputProps) => {
   return (
     <div
@@ -24,9 +25,7 @@ export const TextInput = ({
       })}
     >
       <div className='textInput-inner'>
-        {mode === 'bordered' && (
-          <IconSearchTextInput className='textInput__icon' />
-        )}
+        {IconComponent && <IconComponent className='textInput__icon' />}
         <input
           type='text'
           className={cn('textInput__input', {

@@ -1,6 +1,8 @@
 import { TextInput } from '@/components';
 import { Select } from '@/components/Select/Select';
 import bannerImg from '@/assets/images/page-content/banner.png';
+import IconSearchTextInput from '@/assets/icons/search_icon.svg?react';
+
 import {
   GENDER_OPTIONS,
   SPECIES_OPTIONS,
@@ -11,22 +13,25 @@ import './CharacterList.scss';
 import { CharacterCard } from '@/widgets/CharacterCard/CharacterCard';
 
 export const CharactersList = () => {
-  const rick = {
-    name: 'Rick Sanchez',
-    gender: 'Male',
-    species: 'Human',
-    location: 'Earth',
-    status: 'Alive',
-    value: 'Alive'
-  };
+  const characters = [
+    {
+      name: 'Rick Sanchez',
+      gender: 'Male',
+      species: 'Human',
+      location: 'Earth',
+      status: 'Alive',
+      value: 'alive'
+    }
+  ];
 
   return (
     <div className='characters container'>
       <div className='characters__banner'>
         <img
-          className='characters__banner-image'
           src={bannerImg}
+          alt='Banner Rick and Morty'
           loading='lazy'
+          className='characters__banner-image'
         />
       </div>
 
@@ -35,6 +40,7 @@ export const CharactersList = () => {
           <TextInput
             placeholder='Filter by name...'
             mode='bordered'
+            IconComponent={IconSearchTextInput}
           />
 
           <Select
@@ -52,19 +58,16 @@ export const CharactersList = () => {
             mode='default'
             placeholder='Status'
             options={STATUS_OPTIONS}
-            SelectOptionComponent={({ value }) => <>{value}</>}
           />
         </div>
 
         <div className='characters__list'>
-          <CharacterCard
-            name={rick.name}
-            gender={rick.gender}
-            species={rick.species}
-            location={rick.location}
-            status={rick.status}
-            value={rick.value}
-          />
+          {characters.map((character) => (
+            <CharacterCard
+              key={character.name}
+              {...character}
+            />
+          ))}
         </div>
       </div>
     </div>

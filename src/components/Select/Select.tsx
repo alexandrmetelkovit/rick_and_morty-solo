@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 
+import { cn } from '@/shared/lib/helper';
 import IconArrowDownFilter from '@/assets/icons/arrow_filter-down.svg?react';
 
 import './Select.scss';
-import { cn } from '@/shared/lib/helper';
 
 export interface IPropsOptions {
   label: string;
@@ -25,10 +25,9 @@ interface ISelectProps {
   mode: 'default' | 'small';
   value?: string;
   placeholder?: string;
-  onChange?: (value: string) => void;
+  onChange?: (option: IPropsOptions) => void;
   SelectOptionComponent?: React.FC<SelectOptionContentProps>;
 }
-
 export const Select = ({
   options,
   mode = 'default',
@@ -41,6 +40,7 @@ export const Select = ({
   const [selectedOption, setSelectedOption] = useState<IPropsOptions | null>(
     null
   );
+
   const componentRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -52,9 +52,7 @@ export const Select = ({
         setIsOpenList(false);
       }
     }
-
     document.addEventListener('click', handleClickOutside);
-
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
@@ -63,11 +61,11 @@ export const Select = ({
   const handleShowFilterOptions = () => {
     setIsOpenList(!isOpenList);
   };
-
+	
   const handleOptionClickSave = (option: IPropsOptions) => {
     setSelectedOption(option);
     setIsOpenList(false);
-    onChange?.(option.label);
+    onChange?.(option);
   };
 
   return (
@@ -93,7 +91,6 @@ export const Select = ({
         ) : (
           selectedOption?.label || placeholder
         )}
-
         <IconArrowDownFilter
           className={cn('select__icon', {
             select__icon_small: mode == 'small',
@@ -101,7 +98,6 @@ export const Select = ({
           })}
         />
       </button>
-
       {isOpenList && options.length > 0 && (
         <ol
           className={cn('select__list', {
