@@ -11,25 +11,25 @@ export interface IPropsOptions<T> {
 }
 
 export interface ISelectOptionContentProps<T> {
-  value?: T;
+  option?: IPropsOptions<T>;
 }
 
-export const DefaultSelectOptionContent = ({
-  value
+export const DefaultSelectOptionContent = <T,>({
+  option
 }: ISelectOptionContentProps<T>) => {
-  return <>{String(value)}</>;
+  return <>{option?.label}</>;
 };
 
 interface ISelectProps<T> {
+  value: T;
   options: IPropsOptions<T>[];
   mode: 'medium' | 'small';
-  value: T;
   placeholder?: string;
   onChange?: (value: T) => void;
   SelectOptionComponent?: React.FC<ISelectOptionContentProps<T>>;
 }
 
-export const Select = <T,>({
+export const Select = <T extends string | undefined>({
   options,
   mode = 'medium',
   value,
@@ -41,6 +41,7 @@ export const Select = <T,>({
   const [selectedOption, setSelectedOption] = useState<IPropsOptions<T> | null>(
     null
   );
+
   const componentRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -52,7 +53,9 @@ export const Select = <T,>({
         setIsOpenList(false);
       }
     }
+
     document.addEventListener('click', handleClickOutside);
+
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
@@ -73,10 +76,10 @@ export const Select = <T,>({
 
   return (
     <div
+      ref={componentRef}
       className={cn('select', {
         select_small: mode === 'small'
       })}
-      ref={componentRef}
     >
       <button
         type='button'
@@ -85,11 +88,12 @@ export const Select = <T,>({
         })}
         onClick={handleShowFilterOptions}
       >
-        {mode === 'small' ? (
-          <SelectOptionComponent value={currentOption?.value} />
+        {currentOption ? (
+          <SelectOptionComponent option={currentOption} />
         ) : (
-          selectedOption?.label || placeholder
+          placeholder
         )}
+
         <IconArrowDownFilter
           className={cn('select__icon', {
             select__icon_small: mode == 'small',
@@ -98,6 +102,7 @@ export const Select = <T,>({
           aria-label='Toggle select'
         />
       </button>
+
       {isOpenList && options.length > 0 && (
         <ol
           className={cn('select__list', {
@@ -114,7 +119,7 @@ export const Select = <T,>({
                 handleOptionClickSave(option);
               }}
             >
-              <SelectOptionComponent value={option.value} />
+              <SelectOptionComponent option={option} />
             </li>
           ))}
         </ol>

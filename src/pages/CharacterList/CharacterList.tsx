@@ -14,15 +14,20 @@ import {
   CharacterCard,
   type ICharacterCardProps
 } from '@/widgets/CharacterCard/CharacterCard';
+import { useState } from 'react';
 
 export const CharactersList = () => {
+  const [species, setSpecies] = useState('');
+  const [gender, setGender] = useState('');
+  const [status, setStatus] = useState('');
+
   const characters: ICharacterCardProps[] = [
     {
       name: 'Rick Sanchez',
-      gender: 'Male',
-      species: 'Human',
-      location: 'Earth',
-      status: 'Alive'
+      gender: 'male',
+      species: 'human',
+      location: 'earth',
+      status: 'alive'
     }
   ];
 
@@ -47,18 +52,24 @@ export const CharactersList = () => {
 
           <Select
             mode='medium'
-            placeholder='Species'
+            placeholder='Select species'
+            value={species}
+            onChange={setSpecies}
             options={SPECIES_OPTIONS}
           />
           <Select
             mode='medium'
-            placeholder='Gender'
+            placeholder='Select gender'
+            value={gender}
+            onChange={setGender}
             options={GENDER_OPTIONS}
           />
 
           <Select
             mode='medium'
-            placeholder='Status'
+            placeholder='Select status'
+            value={status}
+            onChange={setStatus}
             options={STATUS_OPTIONS}
           />
         </div>

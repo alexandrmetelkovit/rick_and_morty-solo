@@ -1,20 +1,15 @@
 import { cn } from '@/shared/helpers';
 
+import { STATUS_COLORS } from '@/shared/constants';
+import type { TStatus } from '@/shared/types';
+
 import './CircleStatus.scss';
 
-const STATUS_COLORS = {
-  Alive: 'green',
-  Dead: 'red',
-  Unknown: 'orange'
-};
-
-export type TStatusesType = keyof typeof STATUS_COLORS;
-
 export interface ICircleStatusProps {
-  status?: TStatusesType;
+  status?: TStatus;
 }
 
-export const CircleStatus = ({ status = 'Alive' }: ICircleStatusProps) => {
+export const CircleStatus = ({ status = 'alive' }: ICircleStatusProps) => {
   const color = STATUS_COLORS[status];
 
   return <span className={cn('circleStatus', color)} />;
