@@ -1,4 +1,4 @@
-import { cn } from '@/shared/lib/helper';
+import { cn } from '@/shared/helpers';
 
 import './TextInput.scss';
 

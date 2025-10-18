@@ -1,46 +1,46 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { cn } from '@/shared/lib/helper';
+import { cn } from '@/shared/helpers';
 import IconArrowDownFilter from '@/assets/icons/arrow_filter-down.svg?react';
 
 import './Select.scss';
 
-export interface IPropsOptions {
+export interface IPropsOptions<T> {
+  value: T;
   label: string;
-  value: string;
 }
 
-export interface SelectOptionContentProps {
-  value?: string;
+export interface ISelectOptionContentProps<T> {
+  value?: T;
 }
 
 export const DefaultSelectOptionContent = ({
   value
-}: SelectOptionContentProps) => {
-  return <>{value}</>;
+}: ISelectOptionContentProps<T>) => {
+  return <>{String(value)}</>;
 };
 
-interface ISelectProps {
-  options: IPropsOptions[];
-  mode: 'default' | 'small';
-  value?: string;
+interface ISelectProps<T> {
+  options: IPropsOptions<T>[];
+  mode: 'medium' | 'small';
+  value: T;
   placeholder?: string;
-  onChange?: (option: IPropsOptions) => void;
-  SelectOptionComponent?: React.FC<SelectOptionContentProps>;
+  onChange?: (value: T) => void;
+  SelectOptionComponent?: React.FC<ISelectOptionContentProps<T>>;
 }
-export const Select = ({
+
+export const Select = <T,>({
   options,
-  mode = 'default',
-  value = 'Alive',
+  mode = 'medium',
+  value,
   placeholder,
   onChange,
   SelectOptionComponent = DefaultSelectOptionContent
-}: ISelectProps) => {
+}: ISelectProps<T>) => {
   const [isOpenList, setIsOpenList] = useState<boolean>(false);
-  const [selectedOption, setSelectedOption] = useState<IPropsOptions | null>(
+  const [selectedOption, setSelectedOption] = useState<IPropsOptions<T> | null>(
     null
   );
-
   const componentRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -61,12 +61,15 @@ export const Select = ({
   const handleShowFilterOptions = () => {
     setIsOpenList(!isOpenList);
   };
-	
-  const handleOptionClickSave = (option: IPropsOptions) => {
+
+  const handleOptionClickSave = (option: IPropsOptions<T>) => {
     setSelectedOption(option);
     setIsOpenList(false);
-    onChange?.(option);
+    onChange?.(option.value);
   };
+
+  const currentOption =
+    selectedOption || options.find((o) => o.value === value) || null;
 
   return (
     <div
@@ -83,11 +86,7 @@ export const Select = ({
         onClick={handleShowFilterOptions}
       >
         {mode === 'small' ? (
-          <SelectOptionComponent
-            value={
-              mode === 'small' ? selectedOption?.label || value : placeholder
-            }
-          />
+          <SelectOptionComponent value={currentOption?.value} />
         ) : (
           selectedOption?.label || placeholder
         )}
@@ -96,6 +95,7 @@ export const Select = ({
             select__icon_small: mode == 'small',
             select__icon_active: isOpenList
           })}
+          aria-label='Toggle select'
         />
       </button>
       {isOpenList && options.length > 0 && (
@@ -106,7 +106,7 @@ export const Select = ({
         >
           {options.map((option) => (
             <li
-              key={option.value}
+              key={String(option.value)}
               className={cn('select__item', {
                 select__item_small: mode === 'small'
               })}
@@ -114,7 +114,7 @@ export const Select = ({
                 handleOptionClickSave(option);
               }}
             >
-              <SelectOptionComponent value={option.label} />
+              <SelectOptionComponent value={option.value} />
             </li>
           ))}
         </ol>

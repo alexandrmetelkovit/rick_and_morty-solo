@@ -1,4 +1,4 @@
-import { cn } from '@/shared/lib/helper';
+import { cn } from '@/shared/helpers';
 
 import './CircleStatus.scss';
 
@@ -11,11 +11,11 @@ const STATUS_COLORS = {
 export type TStatusesType = keyof typeof STATUS_COLORS;
 
 export interface ICircleStatusProps {
-  status: TStatusesType;
+  status?: TStatusesType;
 }
 
-export const CircleStatus = ({ status }: ICircleStatusProps) => {
+export const CircleStatus = ({ status = 'Alive' }: ICircleStatusProps) => {
   const color = STATUS_COLORS[status];
 
-  return <div className={cn('circleStatus', color)} />;
+  return <span className={cn('circleStatus', color)} />;
 };

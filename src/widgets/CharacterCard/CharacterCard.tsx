@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { cn } from '@/shared/lib/helper';
+import { cn } from '@/shared/helpers';
 import cardImage from '@/assets/images/rick.jpg';
 import { STATUS_OPTIONS } from '@/shared/constants';
 import IconCloseCharacterCard from '@/assets/icons/close.svg?react';
@@ -13,7 +13,7 @@ import {
   Select,
   TextInput,
   type TStatusesType
-} from '@/components';
+} from '@/shared/components';
 
 import './CharacterCard.scss';
 
@@ -22,7 +22,7 @@ export interface ICharacterCardProps {
   gender: string;
   species: string;
   location: string;
-  status: string;
+  status: TStatusesType;
 }
 
 export const CharacterCard = ({
@@ -36,7 +36,7 @@ export const CharacterCard = ({
 
   const [currentName, setCurrentName] = useState<string>(name);
   const [currentLocation, setCurrentLocation] = useState<string>(location);
-  const [statusValue, setStatusValue] = useState<string>(status);
+  const [statusValue, setStatusValue] = useState<string>(status.toLowerCase());
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentName(e.target.value);
@@ -54,15 +54,15 @@ export const CharacterCard = ({
     setIsEdit(false);
   };
 
-  const handleStatusChange = ({ label }: { label: string }) => {
-    setStatusValue(label);
+  const handleStatusChange = (value: string) => {
+    setStatusValue(value);
   };
 
   const handleCancelChangeCard = () => {
     setIsEdit(false);
     setCurrentName(name);
     setCurrentLocation(location);
-    setStatusValue(statusValue);
+    setStatusValue(status);
   };
 
   return (
@@ -75,7 +75,7 @@ export const CharacterCard = ({
         <div className='characterCard__imageWrapper'>
           <img
             src={cardImage}
-            alt='Rick Sanchez photo'
+            alt={name}
             loading='lazy'
             className='characterCard__image'
           />
@@ -100,14 +100,14 @@ export const CharacterCard = ({
                 <>
                   <button className='characterCard__button'>
                     <IconCloseCharacterCard
-                      aria-label='Close the card'
                       onClick={handleConfirmChangeCard}
+                      aria-label='Close the card'
                     />
                   </button>
                   <button className='characterCard__button'>
                     <IconEditCharacterCard
-                      aria-label='Edit card'
                       onClick={handleOpenChangeCard}
+                      aria-label='Edit card'
                     />
                   </button>
                 </>
@@ -115,14 +115,14 @@ export const CharacterCard = ({
                 <>
                   <button className='characterCard__button'>
                     <IconCloseCharacterCard
-                      aria-label='Cancel card changes'
                       onClick={handleCancelChangeCard}
+                      aria-label='Cancel changes'
                     />
                   </button>
                   <button className='characterCard__button'>
                     <IconConfirmCharacterCard
-                      aria-label='Confirm changed'
                       onClick={handleConfirmChangeCard}
+                      aria-label='Confirm changes'
                     />
                   </button>
                 </>
@@ -164,22 +164,20 @@ export const CharacterCard = ({
                 {!isEdit ? (
                   <>
                     {statusValue}
-                    <CircleStatus status={statusValue as TStatusesType} />
+                    <CircleStatus status={statusValue} />
                   </>
                 ) : (
-                  <Select
+                  <Select<TStatusesType>
                     mode='small'
                     options={STATUS_OPTIONS}
                     value={statusValue}
                     onChange={handleStatusChange}
-                    SelectOptionComponent={({ value }) => {
-                      return (
-                        <>
-                          {value}
-                          <CircleStatus status={value as TStatusesType} />
-                        </>
-                      );
-                    }}
+                    SelectOptionComponent={({ value }) => (
+                      <>
+                        {value}
+                        <CircleStatus status={value} />
+                      </>
+                    )}
                   />
                 )}
               </span>

@@ -8,8 +8,8 @@ export const Header = () => {
         <img
           className='header__image'
           src={imgLogo}
-          alt='Логотип приложения'
-          aria-label='Логотип приложения'
+          alt='Logo app'
+          aria-label='Logo app'
         />
       </div>
     </header>

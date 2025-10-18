@@ -1,4 +1,6 @@
-export const STATUS_OPTIONS = [
+import type { IPropsOptions, TStatusesType } from '../components';
+
+export const STATUS_OPTIONS: IPropsOptions<TStatusesType>[] = [
   { label: 'Alive', value: 'alive' },
   { label: 'Dead', value: 'dead' },
   { label: 'Unknown', value: 'unknown' }

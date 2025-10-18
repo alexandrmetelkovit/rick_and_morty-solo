@@ -1,5 +1,5 @@
-import { TextInput } from '@/components';
-import { Select } from '@/components/Select/Select';
+import { TextInput } from '@/shared/components';
+import { Select } from '@/shared/components/Select/Select';
 import bannerImg from '@/assets/images/page-content/banner.png';
 import IconSearchTextInput from '@/assets/icons/search_icon.svg?react';
 
@@ -10,17 +10,19 @@ import {
 } from '@/shared/constants/filterOptions';
 
 import './CharacterList.scss';
-import { CharacterCard } from '@/widgets/CharacterCard/CharacterCard';
+import {
+  CharacterCard,
+  type ICharacterCardProps
+} from '@/widgets/CharacterCard/CharacterCard';
 
 export const CharactersList = () => {
-  const characters = [
+  const characters: ICharacterCardProps[] = [
     {
       name: 'Rick Sanchez',
       gender: 'Male',
       species: 'Human',
       location: 'Earth',
-      status: 'Alive',
-      value: 'alive'
+      status: 'Alive'
     }
   ];
 
@@ -44,18 +46,18 @@ export const CharactersList = () => {
           />
 
           <Select
-            mode='default'
+            mode='medium'
             placeholder='Species'
             options={SPECIES_OPTIONS}
           />
           <Select
-            mode='default'
+            mode='medium'
             placeholder='Gender'
             options={GENDER_OPTIONS}
           />
 
           <Select
-            mode='default'
+            mode='medium'
             placeholder='Status'
             options={STATUS_OPTIONS}
           />

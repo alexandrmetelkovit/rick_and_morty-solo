@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { CharacterPage, CharactersList } from '@/pages';
-import { Footer, Header, PageContent } from '@/components';
+import { Footer, Header, PageContent } from '@/shared/components';
 
 import './App.css';
 
