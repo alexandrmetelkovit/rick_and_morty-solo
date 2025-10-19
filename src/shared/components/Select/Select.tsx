@@ -1,46 +1,47 @@
 import { useEffect, useRef, useState } from 'react';
 
+import { cn } from '@/shared/helpers';
 import IconArrowDownFilter from '@/assets/icons/arrow_filter-down.svg?react';
 
 import './Select.scss';
-import { cn } from '@/shared/lib/helper';
 
-export interface IPropsOptions {
+export interface IPropsOptions<T> {
+  value: T;
   label: string;
-  value: string;
 }
 
-export interface SelectOptionContentProps {
-  value?: string;
+export interface ISelectOptionContentProps<T> {
+  option?: IPropsOptions<T>;
 }
 
-export const DefaultSelectOptionContent = ({
-  value
-}: SelectOptionContentProps) => {
-  return <>{value}</>;
+export const DefaultSelectOptionContent = <T,>({
+  option
+}: ISelectOptionContentProps<T>) => {
+  return <>{option?.label}</>;
 };
 
-interface ISelectProps {
-  options: IPropsOptions[];
-  mode: 'default' | 'small';
-  value?: string;
+interface ISelectProps<T> {
+  value: T;
+  options: IPropsOptions<T>[];
+  mode: 'medium' | 'small';
   placeholder?: string;
-  onChange?: (value: string) => void;
-  SelectOptionComponent?: React.FC<SelectOptionContentProps>;
+  onChange?: (value: T) => void;
+  SelectOptionComponent?: React.FC<ISelectOptionContentProps<T>>;
 }
 
-export const Select = ({
+export const Select = <T extends string | undefined>({
   options,
-  mode = 'default',
-  value = 'Alive',
+  mode = 'medium',
+  value,
   placeholder,
   onChange,
   SelectOptionComponent = DefaultSelectOptionContent
-}: ISelectProps) => {
+}: ISelectProps<T>) => {
   const [isOpenList, setIsOpenList] = useState<boolean>(false);
-  const [selectedOption, setSelectedOption] = useState<IPropsOptions | null>(
+  const [selectedOption, setSelectedOption] = useState<IPropsOptions<T> | null>(
     null
   );
+
   const componentRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -64,18 +65,21 @@ export const Select = ({
     setIsOpenList(!isOpenList);
   };
 
-  const handleOptionClickSave = (option: IPropsOptions) => {
+  const handleOptionClickSave = (option: IPropsOptions<T>) => {
     setSelectedOption(option);
     setIsOpenList(false);
     onChange?.(option.value);
   };
 
+  const currentOption =
+    selectedOption || options.find((o) => o.value === value) || null;
+
   return (
     <div
+      ref={componentRef}
       className={cn('select', {
         select_small: mode === 'small'
       })}
-      ref={componentRef}
     >
       <button
         type='button'
@@ -84,14 +88,10 @@ export const Select = ({
         })}
         onClick={handleShowFilterOptions}
       >
-        {mode === 'small' ? (
-          <SelectOptionComponent
-            value={
-              mode === 'small' ? selectedOption?.label || value : placeholder
-            }
-          />
+        {currentOption ? (
+          <SelectOptionComponent option={currentOption} />
         ) : (
-          selectedOption?.label || placeholder
+          placeholder
         )}
 
         <IconArrowDownFilter
@@ -99,6 +99,7 @@ export const Select = ({
             select__icon_small: mode == 'small',
             select__icon_active: isOpenList
           })}
+          aria-label='Toggle select'
         />
       </button>
 
@@ -110,7 +111,7 @@ export const Select = ({
         >
           {options.map((option) => (
             <li
-              key={option.value}
+              key={String(option.value)}
               className={cn('select__item', {
                 select__item_small: mode === 'small'
               })}
@@ -118,7 +119,7 @@ export const Select = ({
                 handleOptionClickSave(option);
               }}
             >
-              <SelectOptionComponent value={option.label} />
+              <SelectOptionComponent option={option} />
             </li>
           ))}
         </ol>

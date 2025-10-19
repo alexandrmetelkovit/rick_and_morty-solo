@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import { Loader } from '@/components/Loader/Loader';
+import { Loader } from '@/shared/components/Loader/Loader';
 import IconArrowLeftBack from '@/assets/icons/arrow_back.svg?react';
 
 import './CharacterPage.scss';

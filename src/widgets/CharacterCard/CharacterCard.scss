@@ -1,4 +1,6 @@
-.character-card {
+.characterCard {
+  position: relative;
+
   display: flex;
   column-gap: 13px;
   max-width: 508px;
@@ -7,26 +9,88 @@
   box-shadow: 1px 1px 4px #00000040;
   border-radius: 6px;
 
+  &__imageWrapper {
+    width: 240px;
+    height: 234px;
+    overflow: hidden;
+    border-radius: 6px;
+
+    &-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
   &__body {
     display: grid;
     row-gap: 10px;
+    height: 40px;
   }
 
   &__header {
     display: flex;
     justify-content: space-between;
-    max-width: 240px;
+    width: 240px;
+    align-items: center;
   }
 
   &__name {
     font-size: 20px;
     font-weight: 500;
     letter-spacing: 0.15px;
+    transition: 0.2s all ease-in-out;
+
+    &:hover {
+      color: green;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.3s ease,
+      viibility 0.3s ease;
+  }
+
+  &_edit .characterCard__actions {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &:hover .characterCard__actions {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &__button {
+    display: flex;
+    column-gap: 2px;
+
+    width: 24px;
+    height: 24px;
+    background-color: #fff;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      opacity: 0.7;
+    }
   }
 
   &__list {
     display: grid;
-    row-gap: 1px;
+    row-gap: 5px;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    max-width: 180px;
   }
 
   &__title {
@@ -40,5 +104,8 @@
     font-size: 14px;
     color: #0009;
     letter-spacing: 0.25px;
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
   }
 }

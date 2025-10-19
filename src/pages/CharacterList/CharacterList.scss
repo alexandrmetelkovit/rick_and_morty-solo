@@ -17,15 +17,19 @@
   }
 
   &__body {
+    display: grid;
+    row-gap: 16px;
+  }
+
+  &__filters {
     display: flex;
-    column-gap: 25px;
-    justify-content: center;
+    justify-content: space-between;
+    column-gap: 28px;
   }
 
   &__list {
     display: flex;
     flex-wrap: wrap;
     gap: 28px;
-    justify-content: space-between;
   }
 }

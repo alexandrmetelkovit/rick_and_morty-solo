@@ -9,8 +9,12 @@
     border: 1px solid #393939;
   }
 
-  &_underline {
+  &_underlined {
+    width: 178px;
     border: none;
+    padding: 0;
+    max-height: 30px;
+    height: 100%;
   }
 
   &-inner {
@@ -27,11 +31,9 @@
   &__input {
     width: 100%;
     max-width: 176px;
-    height: 24px;
 
-    &_underline {
-      padding-left: 2px;
-      border-bottom: 1px solid black;
+    &_underlined {
+      border-bottom: 0.2px solid black;
     }
   }
 }
