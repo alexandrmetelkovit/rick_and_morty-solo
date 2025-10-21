@@ -6,6 +6,16 @@
 
   &__image {
     animation: spin 10s linear infinite;
+
+    &_small {
+      width: 101px;
+      height: 103px;
+    }
+
+    &_medium {
+      width: 475px;
+      height: 465px;
+    }
   }
 
   &__text {

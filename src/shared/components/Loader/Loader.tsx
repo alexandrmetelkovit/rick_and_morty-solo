@@ -1,40 +1,38 @@
-import bigLoaderImg from '@/assets/images/loaders/loader-big.png';
+import { cn } from '@/shared/helpers';
+import mediumLoaderImg from '@/assets/images/loaders/loader-medium.png';
 import smallLoaderImg from '@/assets/images/loaders/loader-small.png';
+
 import './Loader.scss';
 
+type TLoaderSize = 'small' | 'medium';
+
 interface ILoaderProps {
-  mode: 'smallLoader' | 'bigLoader';
+  size: TLoaderSize;
+  text?: string;
 }
 
-const loaders = {
-  smallLoader: {
-    src: smallLoaderImg,
-    width: 101,
-    height: 103,
-    text: null
-  },
-  bigLoader: {
-    src: bigLoaderImg,
-    width: 475,
-    height: 465,
-    text: 'Loading character card...'
-  }
-};
+export const Loader = ({ size, text }: ILoaderProps) => {
+  const images = {
+    small: smallLoaderImg,
+    medium: mediumLoaderImg
+  };
+  const imageSrc = images[size];
 
-export const Loader = ({ mode }: ILoaderProps) => {
-  const { src, width, height, text } = loaders[mode];
+  const showText = size !== 'small' && !!text;
 
   return (
-    <div className='loader'>
+    <div
+      className='loader'
+      role='status'
+      aria-label='loading...'
+    >
       <img
-        className='loader__image'
-        src={src}
-        width={width}
-        height={height}
-        alt='Анимация загруки'
-        aria-label='Анимация загрузки'
+        className={cn('loader__image', `loader__image_${size}`)}
+        src={imageSrc}
+        alt=''
+        loading='lazy'
       />
-      {text && <p className='loader__text'>{text}</p>}
+      {showText && <p className='loader__text'>{text}</p>}
     </div>
   );
 };

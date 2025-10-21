@@ -1,26 +1,13 @@
-import { TextInput } from '@/shared/components';
-import { Select } from '@/shared/components/Select/Select';
 import bannerImg from '@/assets/images/page-content/banner.png';
-import IconSearchTextInput from '@/assets/icons/search_icon.svg?react';
-
-import {
-  GENDER_OPTIONS,
-  SPECIES_OPTIONS,
-  STATUS_OPTIONS
-} from '@/shared/constants/filterOptions';
-
-import './CharacterList.scss';
+import { FilterPanel } from '@/widgets/CharacterCard/FilterPanel/FilterPanel';
 import {
   CharacterCard,
   type ICharacterCardProps
 } from '@/widgets/CharacterCard/CharacterCard';
-import { useState } from 'react';
+
+import './CharacterList.scss';
 
 export const CharactersList = () => {
-  const [species, setSpecies] = useState('');
-  const [gender, setGender] = useState('');
-  const [status, setStatus] = useState('');
-
   const characters: ICharacterCardProps[] = [
     {
       name: 'Rick Sanchez',
@@ -43,36 +30,7 @@ export const CharactersList = () => {
       </div>
 
       <div className='characters__body'>
-        <div className='characters__filters'>
-          <TextInput
-            placeholder='Filter by name...'
-            mode='bordered'
-            IconComponent={IconSearchTextInput}
-          />
-
-          <Select
-            mode='medium'
-            placeholder='Select species'
-            value={species}
-            onChange={setSpecies}
-            options={SPECIES_OPTIONS}
-          />
-          <Select
-            mode='medium'
-            placeholder='Select gender'
-            value={gender}
-            onChange={setGender}
-            options={GENDER_OPTIONS}
-          />
-
-          <Select
-            mode='medium'
-            placeholder='Select status'
-            value={status}
-            onChange={setStatus}
-            options={STATUS_OPTIONS}
-          />
-        </div>
+        <FilterPanel />
 
         <div className='characters__list'>
           {characters.map((character) => (
