@@ -61,6 +61,10 @@ export const CharacterCard = ({
     setStatusValue(status);
   };
 
+  const currentStatus = STATUS_OPTIONS.find(
+    (option) => option.value === statusValue
+  );
+
   return (
     <>
       <div
@@ -157,14 +161,14 @@ export const CharacterCard = ({
                     onChange={handleStatusChange}
                     SelectOptionComponent={({ option }) => (
                       <>
-                        {option?.value}
+                        {option?.label}
                         <CircleStatus status={option?.value} />
                       </>
                     )}
                   />
                 ) : (
                   <>
-                    {statusValue}
+                    {currentStatus?.label}
                     <CircleStatus status={statusValue} />
                   </>
                 )}

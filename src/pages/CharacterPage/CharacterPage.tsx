@@ -22,8 +22,11 @@ export const CharacterPage = () => {
           </Link>
         </div>
         <div className='characterPage__body'>
-          <Loader mode='bigLoader' />
-          <Loader mode='smallLoader' />
+          <Loader
+            size='medium'
+            text='Loading characters...'
+          />
+          <Loader size='small' />
         </div>
       </div>
     </>
