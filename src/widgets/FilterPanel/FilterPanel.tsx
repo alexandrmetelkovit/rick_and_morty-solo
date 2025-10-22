@@ -6,7 +6,7 @@ import {
   GENDER_OPTIONS,
   SPECIES_OPTIONS,
   STATUS_OPTIONS
-} from '@/shared/constants/filterOptions';
+} from '@/shared/constants';
 
 import './FilterPanel.scss';
 
@@ -16,7 +16,7 @@ export const FilterPanel = () => {
   const [status, setStatus] = useState('');
 
   return (
-    <div className='filters'>
+    <div className='filterPanel'>
       <TextInput
         placeholder='Filter by name...'
         mode='bordered'

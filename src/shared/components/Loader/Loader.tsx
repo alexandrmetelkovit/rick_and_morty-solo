@@ -18,8 +18,6 @@ export const Loader = ({ size, text }: ILoaderProps) => {
   };
   const imageSrc = images[size];
 
-  const showText = size !== 'small' && !!text;
-
   return (
     <div
       className='loader'
@@ -29,10 +27,10 @@ export const Loader = ({ size, text }: ILoaderProps) => {
       <img
         className={cn('loader__image', `loader__image_${size}`)}
         src={imageSrc}
-        alt=''
+        alt='Loading...'
         loading='lazy'
       />
-      {showText && <p className='loader__text'>{text}</p>}
+      {!!text && <p className='loader__text'>{text}</p>}
     </div>
   );
 };

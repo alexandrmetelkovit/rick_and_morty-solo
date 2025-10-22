@@ -1,9 +1,9 @@
 import bannerImg from '@/assets/images/page-content/banner.png';
-import { FilterPanel } from '@/widgets/CharacterCard/FilterPanel/FilterPanel';
 import {
   CharacterCard,
+  FilterPanel,
   type ICharacterCardProps
-} from '@/widgets/CharacterCard/CharacterCard';
+} from '@/widgets';
 
 import './CharacterList.scss';
 
@@ -11,9 +11,9 @@ export const CharactersList = () => {
   const characters: ICharacterCardProps[] = [
     {
       name: 'Rick Sanchez',
-      gender: 'male',
-      species: 'human',
-      location: 'earth',
+      gender: 'Male',
+      species: 'Human',
+      location: 'Earth',
       status: 'alive'
     }
   ];
