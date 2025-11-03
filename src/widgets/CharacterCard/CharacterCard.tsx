@@ -3,22 +3,26 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { cn } from '@/shared/helpers';
-import cardImage from '@/assets/images/rick.jpg';
+import type { TStatus } from '@/shared/types';
 import { STATUS_OPTIONS } from '@/shared/constants';
 import IconCloseCharacterCard from '@/assets/icons/close.svg?react';
+import { CircleStatus, Select, TextInput } from '@/shared/components';
 import IconEditCharacterCard from '@/assets/icons/edit-card.svg?react';
 import IconConfirmCharacterCard from '@/assets/icons/confirm.svg?react';
-import { CircleStatus, Select, TextInput } from '@/shared/components';
-import type { TStatus } from '@/shared/types';
 
 import './CharacterCard.scss';
 
-export interface ICharacterCardProps {
+export interface ICharacterCard {
+  id: number;
   name: string;
   gender: string;
   species: string;
-  location: string;
+  location: {
+    name: string;
+    url: string;
+  };
   status: TStatus;
+  image: string;
 }
 
 export const CharacterCard = ({
@@ -26,12 +30,13 @@ export const CharacterCard = ({
   gender,
   species,
   location,
-  status
-}: ICharacterCardProps) => {
+  status,
+  image
+}: ICharacterCard) => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
 
   const [currentName, setCurrentName] = useState<string>(name);
-  const [currentLocation, setCurrentLocation] = useState<string>(location);
+  const [currentLocation, setCurrentLocation] = useState<string>(location.name);
   const [statusValue, setStatusValue] = useState<TStatus>(status);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,7 +62,7 @@ export const CharacterCard = ({
   const handleCancelChangeCard = () => {
     setIsEdit(false);
     setCurrentName(name);
-    setCurrentLocation(location);
+    setCurrentLocation(location.name);
     setStatusValue(status);
   };
 
@@ -74,7 +79,7 @@ export const CharacterCard = ({
       >
         <div className='characterCard__imageWrapper'>
           <img
-            src={cardImage}
+            src={image}
             alt={name}
             loading='lazy'
             className='characterCard__image'
@@ -136,17 +141,17 @@ export const CharacterCard = ({
             <div className='characterCard__item'>
               <p className='characterCard__title'>Location</p>
 
-              {isEdit ? (
-                <span className='characterCard__option'>
+              <span className='characterCard__option'>
+                {isEdit ? (
                   <TextInput
                     mode='underlined'
                     value={currentLocation}
                     onChange={handleLocationChange}
                   />
-                </span>
-              ) : (
-                <span className='characterCard__option'>{currentLocation}</span>
-              )}
+                ) : (
+                  currentLocation
+                )}
+              </span>
             </div>
 
             <div className='characterCard__item'>
