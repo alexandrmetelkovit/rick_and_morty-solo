@@ -1,8 +1,8 @@
+import { Toaster } from 'react-hot-toast';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { CharacterPage, CharactersList } from '@/pages';
 import { Footer, Header, PageContent } from '@/shared/components';
-import { Toaster } from 'react-hot-toast';
 
 import './App.css';
 
@@ -28,10 +28,7 @@ function App() {
         </BrowserRouter>
       </PageContent>
 
-      <Toaster
-        position='bottom-right'
-        reverseOrder={false}
-      />
+      <Toaster position='bottom-right' />
 
       <Footer text={textFooter} />
     </>

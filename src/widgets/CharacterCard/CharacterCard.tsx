@@ -5,25 +5,13 @@ import { Link } from 'react-router-dom';
 import { cn } from '@/shared/helpers';
 import type { TStatus } from '@/shared/types';
 import { STATUS_OPTIONS } from '@/shared/constants';
+import type { ICharacterCard } from '@/shared/types/character';
 import IconCloseCharacterCard from '@/assets/icons/close.svg?react';
 import { CircleStatus, Select, TextInput } from '@/shared/components';
 import IconEditCharacterCard from '@/assets/icons/edit-card.svg?react';
 import IconConfirmCharacterCard from '@/assets/icons/confirm.svg?react';
 
 import './CharacterCard.scss';
-
-export interface ICharacterCard {
-  id: number;
-  name: string;
-  gender: string;
-  species: string;
-  location: {
-    name: string;
-    url: string;
-  };
-  status: TStatus;
-  image: string;
-}
 
 export const CharacterCard = ({
   name,
@@ -141,17 +129,17 @@ export const CharacterCard = ({
             <div className='characterCard__item'>
               <p className='characterCard__title'>Location</p>
 
-              <span className='characterCard__option'>
-                {isEdit ? (
+              {isEdit ? (
+                <span className='characterCard__option'>
                   <TextInput
                     mode='underlined'
                     value={currentLocation}
                     onChange={handleLocationChange}
                   />
-                ) : (
-                  currentLocation
-                )}
-              </span>
+                </span>
+              ) : (
+                <span className='characterCard__option'>{currentLocation}</span>
+              )}
             </div>
 
             <div className='characterCard__item'>

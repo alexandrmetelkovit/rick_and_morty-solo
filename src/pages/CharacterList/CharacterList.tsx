@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 
-import axios from 'axios';
 import toast from 'react-hot-toast';
 
 import { Loader } from '@/shared/components';
-import { getErrorMessage } from '@/api/errorUtils';
+import type { ICharacterCard } from '@/shared/types';
+import { CharacterCard, FilterPanel } from '@/widgets';
+import { getErrorMessage } from '@/shared/api/errorUtils';
+import { getCharacters } from '@/shared/api/getCharacters';
 import bannerImg from '@/assets/images/page-content/banner.png';
-import { CharacterCard, FilterPanel, type ICharacterCard } from '@/widgets';
 
 import './CharacterList.scss';
 
@@ -21,35 +22,20 @@ export const CharactersList = () => {
         setIsLoading(true);
         setErrorText('');
 
-        const response = await axios.get(
-          'https://rickandmortyapi.com/api/character'
-        );
-        setCharacters(
-          response.data.results.map((char: ICharacterCard) => ({
-            ...char,
-            status: char.status.toLowerCase()
-          }))
-        );
-        console.log(response.data.results);
+        const data = await getCharacters();
+        setCharacters(data);
 
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 1500);
+        setIsLoading(false);
       } catch (error) {
         const message = getErrorMessage(error);
 
-        console.log(error);
-        setTimeout(() => {
-          toast.error(message);
-          setErrorText(message);
-        }, 1500);
-        getErrorMessage(error);
+        toast.error(message);
+        setErrorText(message);
       } finally {
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 1500);
+        setIsLoading(false);
       }
     };
+
     fetchCharacters();
   }, []);
 
@@ -67,23 +53,24 @@ export const CharactersList = () => {
       <div className='characters__body'>
         <FilterPanel />
 
-        <div className='characters__list'>
+        <ul className='characters__list'>
           {isLoading ? (
             <Loader
-              size={'medium'}
+              size='medium'
               text='Loading characters...'
             />
           ) : errorText ? (
             <p className='characters__error'>{errorText}</p>
+          ) : characters.length === 0 ? (
+            <p className='characters__empty'>Список персонажей пуст</p>
           ) : (
             characters.map((character) => (
-              <CharacterCard
-                key={character.id}
-                {...character}
-              />
+              <li key={character.id}>
+                <CharacterCard {...character} />
+              </li>
             ))
           )}
-        </div>
+        </ul>
       </div>
     </div>
   );

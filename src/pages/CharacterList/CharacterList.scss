@@ -28,7 +28,8 @@
     justify-content: center;
   }
 
-  &__error {
+  &__error,
+  &__empty {
     font-size: 30px;
     font-weight: 500;
     letter-spacing: 0.25px;
