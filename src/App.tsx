@@ -1,3 +1,4 @@
+import { Toaster } from 'react-hot-toast';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { CharacterPage, CharactersList } from '@/pages';
@@ -26,6 +27,8 @@ function App() {
           </Routes>
         </BrowserRouter>
       </PageContent>
+
+      <Toaster position='bottom-right' />
 
       <Footer text={textFooter} />
     </>

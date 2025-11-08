@@ -3,35 +3,28 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { cn } from '@/shared/helpers';
-import cardImage from '@/assets/images/rick.jpg';
+import type { TStatus } from '@/shared/types';
 import { STATUS_OPTIONS } from '@/shared/constants';
+import type { ICharacterCard } from '@/shared/types/character';
 import IconCloseCharacterCard from '@/assets/icons/close.svg?react';
+import { CircleStatus, Select, TextInput } from '@/shared/components';
 import IconEditCharacterCard from '@/assets/icons/edit-card.svg?react';
 import IconConfirmCharacterCard from '@/assets/icons/confirm.svg?react';
-import { CircleStatus, Select, TextInput } from '@/shared/components';
-import type { TStatus } from '@/shared/types';
 
 import './CharacterCard.scss';
-
-export interface ICharacterCardProps {
-  name: string;
-  gender: string;
-  species: string;
-  location: string;
-  status: TStatus;
-}
 
 export const CharacterCard = ({
   name,
   gender,
   species,
   location,
-  status
-}: ICharacterCardProps) => {
+  status,
+  image
+}: ICharacterCard) => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
 
   const [currentName, setCurrentName] = useState<string>(name);
-  const [currentLocation, setCurrentLocation] = useState<string>(location);
+  const [currentLocation, setCurrentLocation] = useState<string>(location.name);
   const [statusValue, setStatusValue] = useState<TStatus>(status);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,7 +50,7 @@ export const CharacterCard = ({
   const handleCancelChangeCard = () => {
     setIsEdit(false);
     setCurrentName(name);
-    setCurrentLocation(location);
+    setCurrentLocation(location.name);
     setStatusValue(status);
   };
 
@@ -74,7 +67,7 @@ export const CharacterCard = ({
       >
         <div className='characterCard__imageWrapper'>
           <img
-            src={cardImage}
+            src={image}
             alt={name}
             loading='lazy'
             className='characterCard__image'
