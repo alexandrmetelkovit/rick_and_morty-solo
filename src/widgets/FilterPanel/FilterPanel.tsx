@@ -7,7 +7,6 @@ import {
 } from '@/shared/constants';
 
 import './FilterPanel.scss';
-import type React from 'react';
 
 export interface IFilterPanelProps {
   name: string;
@@ -30,9 +29,6 @@ export const FilterPanel = ({
   onChangeGender,
   onChangeStatus
 }: IFilterPanelProps) => {
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChangeName(e.target.value);
-  };
   const handleSpeciesChange = (value: string) => {
     onChangeSpecies(value);
   };
@@ -49,7 +45,7 @@ export const FilterPanel = ({
         value={name}
         placeholder='Filter by name...'
         mode='bordered'
-        onChange={handleNameChange}
+        onChange={onChangeName}
         IconComponent={IconSearchTextInput}
       />
 

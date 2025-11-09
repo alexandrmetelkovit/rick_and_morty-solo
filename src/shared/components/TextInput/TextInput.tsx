@@ -6,7 +6,7 @@ export interface ITextInputProps {
   value?: string;
   mode?: 'bordered' | 'underlined';
   placeholder?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (value: string) => void;
   IconComponent?: React.FC<React.SVGProps<SVGSVGElement>>;
 }
 
@@ -17,6 +17,10 @@ export const TextInput = ({
   onChange,
   IconComponent
 }: ITextInputProps) => {
+  const handleChangeName = (e: { target: { value: string } }) => {
+    onChange?.(e.target.value);
+  };
+
   return (
     <div
       className={cn('textInput', {
@@ -32,7 +36,7 @@ export const TextInput = ({
             textInput__input_underlined: mode === 'underlined'
           })}
           placeholder={placeholder}
-          onChange={onChange}
+          onChange={handleChangeName}
           value={value}
         />
       </div>

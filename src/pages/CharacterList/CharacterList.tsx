@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 
 import toast from 'react-hot-toast';
 
-import { Loader } from '@/shared';
-import type { ICharacterCard } from '@/shared';
+import { Loader } from '@/shared/components';
+import type { ICharacterCard } from '@/shared/types';
 import { CharacterCard, FilterPanel } from '@/widgets';
-import { getErrorMessage, getCharacters } from '@/shared';
+import { getCharacters, getErrorMessage } from '@/shared/api';
 import bannerImg from '@/assets/images/page-content/banner.png';
 
 import './CharacterList.scss';
@@ -39,7 +39,6 @@ export const CharactersList = () => {
         const message = getErrorMessage(error);
 
         toast.error(message);
-        setErrorText(message);
       } finally {
         setIsLoading(false);
       }
