@@ -3,9 +3,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { cn } from '@/shared/helpers';
-import type { TStatus } from '@/shared/types';
 import { STATUS_OPTIONS } from '@/shared/constants';
-import type { ICharacterCard } from '@/shared/types/character';
+import type { ICharacterCard, TStatus } from '@/shared/types';
 import IconCloseCharacterCard from '@/assets/icons/close.svg?react';
 import { CircleStatus, Select, TextInput } from '@/shared/components';
 import IconEditCharacterCard from '@/assets/icons/edit-card.svg?react';

@@ -5,8 +5,7 @@ import toast from 'react-hot-toast';
 import { Loader } from '@/shared/components';
 import type { ICharacterCard } from '@/shared/types';
 import { CharacterCard, FilterPanel } from '@/widgets';
-import { getErrorMessage } from '@/shared/api/errorUtils';
-import { getCharacters } from '@/shared/api/getCharacters';
+import { getCharacters, getErrorMessage } from '@/shared/api';
 import bannerImg from '@/assets/images/page-content/banner.png';
 
 import './CharacterList.scss';
@@ -16,13 +15,23 @@ export const CharactersList = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorText, setErrorText] = useState<string>('');
 
+  const [filterName, setFilterName] = useState('');
+  const [filterSpecies, setFilterSpecies] = useState('');
+  const [filterGender, setFilterGender] = useState('');
+  const [filterStatus, setFilterStatus] = useState('');
+
   useEffect(() => {
     const fetchCharacters = async () => {
       try {
         setIsLoading(true);
         setErrorText('');
 
-        const data = await getCharacters();
+        const data = await getCharacters({
+          name: filterName,
+          species: filterSpecies,
+          gender: filterGender,
+          status: filterStatus
+        });
         setCharacters(data);
 
         setIsLoading(false);
@@ -30,14 +39,13 @@ export const CharactersList = () => {
         const message = getErrorMessage(error);
 
         toast.error(message);
-        setErrorText(message);
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchCharacters();
-  }, []);
+  }, [filterName, filterSpecies, filterGender, filterStatus]);
 
   return (
     <div className='characters container'>
@@ -51,7 +59,16 @@ export const CharactersList = () => {
       </div>
 
       <div className='characters__body'>
-        <FilterPanel />
+        <FilterPanel
+          name={filterName}
+          species={filterSpecies}
+          gender={filterGender}
+          status={filterStatus}
+          onChangeName={setFilterName}
+          onChangeSpecies={setFilterSpecies}
+          onChangeGender={setFilterGender}
+          onChangeStatus={setFilterStatus}
+        />
 
         <ul className='characters__list'>
           {isLoading ? (

@@ -1,10 +1,33 @@
 import { $api } from './api';
-import type { ICharacterCard } from '../types';
 
-export const getCharacters = async () => {
-  const response = await $api.get('character');
-  return response.data.results.map((character: ICharacterCard) => ({
-    ...character,
-    status: character.status.toLowerCase()
-  }));
+import type { ICharacterCard } from '../types';
+import axios from 'axios';
+
+export const getCharacters = async (filters: {
+  name?: string;
+  species?: string;
+  gender?: string;
+  status?: string;
+}) => {
+  try {
+    const response = await $api.get('character', {
+      params: {
+        name: filters.name,
+        species: filters.species,
+        gender: filters.gender,
+        status: filters.status
+      }
+    });
+
+    return response.data.results.map((character: ICharacterCard) => ({
+      ...character,
+      status: character.status.toLowerCase()
+    }));
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 404) {
+      return [];
+    }
+
+    throw error;
+  }
 };

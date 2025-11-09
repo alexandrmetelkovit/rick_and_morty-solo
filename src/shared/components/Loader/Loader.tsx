@@ -1,6 +1,6 @@
 import { cn } from '@/shared/helpers';
-import mediumLoaderImg from '@/assets/images/loaders/loader-medium.png';
 import smallLoaderImg from '@/assets/images/loaders/loader-small.png';
+import mediumLoaderImg from '@/assets/images/loaders/loader-medium.png';
 
 import './Loader.scss';
 

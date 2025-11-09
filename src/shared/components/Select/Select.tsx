@@ -20,10 +20,12 @@ export const DefaultSelectOptionContent = <T,>({
   return <>{option?.label}</>;
 };
 
+type TModeSelect = 'medium' | 'small';
+
 interface ISelectProps<T> {
   value: T;
   options: IPropsOptions<T>[];
-  mode: 'medium' | 'small';
+  mode: TModeSelect;
   placeholder?: string;
   onChange?: (value: T) => void;
   SelectOptionComponent?: React.FC<ISelectOptionContentProps<T>>;
