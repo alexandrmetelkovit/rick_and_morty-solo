@@ -11,9 +11,9 @@ export interface ITextInputProps {
 }
 
 export const TextInput = ({
+  value,
   mode = 'bordered',
   placeholder,
-  value,
   onChange,
   IconComponent
 }: ITextInputProps) => {

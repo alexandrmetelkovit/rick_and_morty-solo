@@ -2,12 +2,12 @@ import { useState } from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { cn } from '@/shared/helpers';
-import type { TStatus } from '@/shared/types';
-import { STATUS_OPTIONS } from '@/shared/constants';
-import type { ICharacterCard } from '@/shared/types/character';
+import { cn } from '@/shared';
+import type { TStatus } from '@/shared';
+import { STATUS_OPTIONS } from '@/shared';
+import type { ICharacterCard } from '@/shared';
 import IconCloseCharacterCard from '@/assets/icons/close.svg?react';
-import { CircleStatus, Select, TextInput } from '@/shared/components';
+import { CircleStatus, Select, TextInput } from '@/shared';
 import IconEditCharacterCard from '@/assets/icons/edit-card.svg?react';
 import IconConfirmCharacterCard from '@/assets/icons/confirm.svg?react';
 
