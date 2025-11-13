@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import toast from 'react-hot-toast';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { Loader } from '@/shared/components';
 import type { ICharacterCard } from '@/shared/types';
@@ -12,6 +13,8 @@ import './CharacterList.scss';
 
 export const CharactersList = () => {
   const [characters, setCharacters] = useState<ICharacterCard[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorText, setErrorText] = useState<string>('');
 
@@ -26,15 +29,20 @@ export const CharactersList = () => {
         setIsLoading(true);
         setErrorText('');
 
-        const data = await getCharacters({
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        const { results, hasNextPage } = await getCharacters(page, {
           name: filterName,
           species: filterSpecies,
           gender: filterGender,
           status: filterStatus
         });
-        setCharacters(data);
 
-        setIsLoading(false);
+        setCharacters((prev) => (page === 1 ? results : [...prev, ...results]));
+
+        setHasMore(hasNextPage);
+
+        await new Promise((r) => setTimeout(r, 1000));
       } catch (error) {
         const message = getErrorMessage(error);
 
@@ -45,6 +53,10 @@ export const CharactersList = () => {
     };
 
     fetchCharacters();
+  }, [page, filterName, filterSpecies, filterGender, filterStatus]);
+
+  useEffect(() => {
+    setPage(1);
   }, [filterName, filterSpecies, filterGender, filterStatus]);
 
   return (
@@ -70,24 +82,37 @@ export const CharactersList = () => {
           onChangeStatus={setFilterStatus}
         />
 
-        <ul className='characters__list'>
-          {isLoading ? (
-            <Loader
-              size='medium'
-              text='Loading characters...'
-            />
-          ) : errorText ? (
-            <p className='characters__error'>{errorText}</p>
-          ) : characters.length === 0 ? (
-            <p className='characters__empty'>Список персонажей пуст</p>
-          ) : (
-            characters.map((character) => (
-              <li key={character.id}>
-                <CharacterCard {...character} />
-              </li>
-            ))
-          )}
-        </ul>
+        {characters.length === 0 && isLoading ? (
+          <Loader
+            size='medium'
+            text='Loading characters...'
+          />
+        ) : errorText ? (
+          <p className='characters__error'>{errorText}</p>
+        ) : characters.length === 0 ? (
+          <p className='characters__empty'>Список персонажей пуст</p>
+        ) : (
+          <InfiniteScroll
+            dataLength={characters.length || 0}
+            next={() => setPage((page) => page + 1)}
+            hasMore={hasMore}
+            loader={<Loader size='small' />}
+            endMessage={
+              <p style={{ textAlign: 'center', paddingTop: '20px' }}>
+                End of list
+              </p>
+            }
+            style={{ overflow: 'visible' }}
+          >
+            <ul className='characters__list'>
+              {characters.map((character) => (
+                <li key={character.id}>
+                  <CharacterCard {...character} />
+                </li>
+              ))}
+            </ul>
+          </InfiniteScroll>
+        )}
       </div>
     </div>
   );

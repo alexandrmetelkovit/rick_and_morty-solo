@@ -32,9 +32,11 @@ export const FilterPanel = ({
   const handleSpeciesChange = (value: string) => {
     onChangeSpecies(value);
   };
+
   const handleGenderChange = (value: string) => {
     onChangeGender(value);
   };
+
   const handleStatusChange = (value: string) => {
     onChangeStatus(value);
   };
