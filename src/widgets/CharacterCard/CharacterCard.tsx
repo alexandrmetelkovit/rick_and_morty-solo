@@ -26,12 +26,12 @@ export const CharacterCard = ({
   const [currentLocation, setCurrentLocation] = useState<string>(location.name);
   const [statusValue, setStatusValue] = useState<TStatus>(status);
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrentName(e.target.value);
+  const handleNameChange = (value: string) => {
+    setCurrentName(value);
   };
 
-  const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrentLocation(e.target.value);
+  const handleLocationChange = (value: string) => {
+    setCurrentLocation(value);
   };
 
   const handleOpenChangeCard = () => {
@@ -144,27 +144,25 @@ export const CharacterCard = ({
             <div className='characterCard__item'>
               <p className='characterCard__title'>Status</p>
 
-              <span className='characterCard__option'>
-                {isEdit ? (
-                  <Select
-                    mode='small'
-                    options={STATUS_OPTIONS}
-                    value={statusValue}
-                    onChange={handleStatusChange}
-                    SelectOptionComponent={({ option }) => (
-                      <>
-                        {option?.label}
-                        <CircleStatus status={option?.value} />
-                      </>
-                    )}
-                  />
-                ) : (
-                  <>
-                    {currentStatus?.label}
-                    <CircleStatus status={statusValue} />
-                  </>
-                )}
-              </span>
+              {isEdit ? (
+                <Select
+                  mode='small'
+                  options={STATUS_OPTIONS}
+                  value={statusValue}
+                  onChange={handleStatusChange}
+                  SelectOptionComponent={({ option }) => (
+                    <>
+                      {option?.label}
+                      <CircleStatus status={option?.value} />
+                    </>
+                  )}
+                />
+              ) : (
+                <span className='characterCard__option'>
+                  {currentStatus?.label}
+                  <CircleStatus status={statusValue} />
+                </span>
+              )}
             </div>
           </div>
         </div>
