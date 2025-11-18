@@ -15,15 +15,12 @@ export const CharacterPage = memo(() => {
   const [isloading, setIsloading] = useState(true);
 
   useEffect(() => {
-    console.log('ID из useParams:', id);
-
     if (!id) return;
 
     const fetchCharacter = async () => {
       try {
         setIsloading(true);
         const data = await getCharacterById(Number(id));
-        console.log(data);
         setCharacter(data);
       } catch (err) {
         console.error(err);
@@ -70,9 +67,9 @@ export const CharacterPage = memo(() => {
           </Link>
         </div>
         <div className='characterPage__body'>
-          <div className='characterPage_header'>
+          <div className='characterPage__header'>
             <img
-              className='characterPage_image'
+              className='characterPage__image'
               src={character.image}
               alt={character.name}
             />
