@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { cn } from '@/shared/helpers';
 
 import { STATUS_COLORS } from '@/shared/constants';
@@ -9,8 +10,8 @@ export interface ICircleStatusProps {
   status?: TStatus;
 }
 
-export const CircleStatus = ({ status = 'alive' }: ICircleStatusProps) => {
+export const CircleStatus = memo(({ status = 'alive' }: ICircleStatusProps) => {
   const color = STATUS_COLORS[status];
 
   return <span className={cn('circleStatus', color)} />;
-};
+});

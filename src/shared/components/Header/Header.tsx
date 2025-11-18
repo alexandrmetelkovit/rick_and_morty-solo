@@ -1,7 +1,8 @@
+import { memo } from 'react';
 import imgLogo from '@/assets/images/header-logo/logo.svg';
 import './Header.scss';
 
-export const Header = () => {
+export const Header = memo(() => {
   return (
     <header className='header'>
       <div className='header__wrapper container'>
@@ -14,4 +15,4 @@ export const Header = () => {
       </div>
     </header>
   );
-};
+});

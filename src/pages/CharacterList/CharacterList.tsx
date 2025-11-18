@@ -1,17 +1,16 @@
-import { useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 
 import toast from 'react-hot-toast';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { Loader } from '@/shared/components';
-import type { ICharacterCard } from '@/shared/types';
-import { CharacterCard, FilterPanel } from '@/widgets';
 import { getCharacters, getErrorMessage } from '@/shared/api';
 import bannerImg from '@/assets/images/page-content/banner.png';
+import { CharacterCard, FilterPanel, type ICharacterCard } from '@/widgets';
 
 import './CharacterList.scss';
 
-export const CharactersList = () => {
+export const CharactersList = memo(() => {
   const [characters, setCharacters] = useState<ICharacterCard[]>([]);
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState(true);
@@ -22,6 +21,15 @@ export const CharactersList = () => {
   const [filterSpecies, setFilterSpecies] = useState('');
   const [filterGender, setFilterGender] = useState('');
   const [filterStatus, setFilterStatus] = useState('');
+
+  const handleUpdateCharacter = useCallback(
+    (updated: Partial<ICharacterCard> & { id: number }) => {
+      setCharacters((prev) =>
+        prev.map((c) => (c.id === updated.id ? { ...c, ...updated } : c))
+      );
+    },
+    []
+  );
 
   useEffect(() => {
     const fetchCharacters = async () => {
@@ -90,7 +98,7 @@ export const CharactersList = () => {
         ) : errorText ? (
           <p className='characters__error'>{errorText}</p>
         ) : characters.length === 0 ? (
-          <p className='characters__empty'>Список персонажей пуст</p>
+          <p className='characters__empty'>Character list is empty</p>
         ) : (
           <InfiniteScroll
             dataLength={characters.length || 0}
@@ -98,16 +106,21 @@ export const CharactersList = () => {
             hasMore={hasMore}
             loader={<Loader size='small' />}
             endMessage={
-              <p style={{ textAlign: 'center', paddingTop: '20px' }}>
-                End of list
-              </p>
+              characters.length < 1 && (
+                <p style={{ textAlign: 'center', paddingTop: '20px' }}>
+                  End of list
+                </p>
+              )
             }
             style={{ overflow: 'visible' }}
           >
             <ul className='characters__list'>
               {characters.map((character) => (
                 <li key={character.id}>
-                  <CharacterCard {...character} />
+                  <CharacterCard
+                    {...character}
+                    onUpdate={handleUpdateCharacter}
+                  />
                 </li>
               ))}
             </ul>
@@ -116,4 +129,4 @@ export const CharactersList = () => {
       </div>
     </div>
   );
-};
+});

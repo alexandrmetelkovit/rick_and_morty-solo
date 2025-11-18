@@ -21,7 +21,7 @@ function App() {
               element={<CharactersList />}
             />
             <Route
-              path='/character'
+              path='character/:id'
               element={<CharacterPage />}
             />
           </Routes>

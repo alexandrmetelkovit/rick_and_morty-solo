@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import { Select, TextInput } from '@/shared/components';
 import IconSearchTextInput from '@/assets/icons/search_icon.svg?react';
 import {
@@ -19,60 +21,66 @@ export interface IFilterPanelProps {
   onChangeStatus: (value: string) => void;
 }
 
-export const FilterPanel = ({
-  name,
-  species,
-  gender,
-  status,
-  onChangeName,
-  onChangeSpecies,
-  onChangeGender,
-  onChangeStatus
-}: IFilterPanelProps) => {
-  const handleSpeciesChange = (value: string) => {
-    onChangeSpecies(value);
-  };
+export const FilterPanel = memo(
+  ({
+    name,
+    species,
+    gender,
+    status,
+    onChangeName,
+    onChangeSpecies,
+    onChangeGender,
+    onChangeStatus
+  }: IFilterPanelProps) => {
+    const handleNameChange = (value: string) => {
+      onChangeName(value);
+    };
 
-  const handleGenderChange = (value: string) => {
-    onChangeGender(value);
-  };
+    const handleSpeciesChange = (value: string) => {
+      onChangeSpecies(value);
+    };
 
-  const handleStatusChange = (value: string) => {
-    onChangeStatus(value);
-  };
+    const handleGenderChange = (value: string) => {
+      onChangeGender(value);
+    };
 
-  return (
-    <div className='filterPanel'>
-      <TextInput
-        value={name}
-        placeholder='Filter by name...'
-        mode='bordered'
-        onChange={onChangeName}
-        IconComponent={IconSearchTextInput}
-      />
+    const handleStatusChange = (value: string) => {
+      onChangeStatus(value);
+    };
 
-      <Select
-        mode='medium'
-        placeholder='Species'
-        value={species}
-        onChange={handleSpeciesChange}
-        options={SPECIES_OPTIONS}
-      />
-      <Select
-        mode='medium'
-        placeholder='Gender'
-        value={gender}
-        onChange={handleGenderChange}
-        options={GENDER_OPTIONS}
-      />
+    return (
+      <div className='filterPanel'>
+        <TextInput
+          value={name}
+          placeholder='Filter by name...'
+          mode='bordered'
+          onChange={handleNameChange}
+          IconComponent={IconSearchTextInput}
+        />
 
-      <Select
-        mode='medium'
-        placeholder='Status'
-        value={status}
-        onChange={handleStatusChange}
-        options={STATUS_OPTIONS}
-      />
-    </div>
-  );
-};
+        <Select
+          mode='medium'
+          placeholder='Species'
+          value={species}
+          onChange={handleSpeciesChange}
+          options={SPECIES_OPTIONS}
+        />
+        <Select
+          mode='medium'
+          placeholder='Gender'
+          value={gender}
+          onChange={handleGenderChange}
+          options={GENDER_OPTIONS}
+        />
+
+        <Select
+          mode='medium'
+          placeholder='Status'
+          value={status}
+          onChange={handleStatusChange}
+          options={STATUS_OPTIONS}
+        />
+      </div>
+    );
+  }
+);

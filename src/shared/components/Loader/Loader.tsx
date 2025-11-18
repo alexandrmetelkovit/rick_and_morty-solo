@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import { cn } from '@/shared/helpers';
 import smallLoaderImg from '@/assets/images/loaders/loader-small.png';
 import mediumLoaderImg from '@/assets/images/loaders/loader-medium.png';
@@ -11,7 +13,7 @@ interface ILoaderProps {
   text?: string;
 }
 
-export const Loader = ({ size, text }: ILoaderProps) => {
+export const Loader = memo(({ size, text }: ILoaderProps) => {
   const images = {
     small: smallLoaderImg,
     medium: mediumLoaderImg
@@ -33,4 +35,4 @@ export const Loader = ({ size, text }: ILoaderProps) => {
       {!!text && <p className='loader__text'>{text}</p>}
     </div>
   );
-};
+});
