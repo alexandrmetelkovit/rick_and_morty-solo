@@ -1,38 +1,16 @@
-import { memo, useEffect, useState } from 'react';
-
 import { Link, useParams } from 'react-router-dom';
 
+import { useCharacter } from '@/hooks/useCharacter';
 import { Loader } from '@/shared/components/Loader/Loader';
 import IconArrowLeftBack from '@/assets/icons/arrow_back.svg?react';
 
 import './CharacterPage.scss';
-import type { ICharacterCard } from '@/widgets';
-import { getCharacterById } from '@/shared/api/getCharacterById';
 
-export const CharacterPage = memo(() => {
+export const CharacterPage = () => {
   const { id } = useParams<{ id: string }>();
-  const [character, setCharacter] = useState<ICharacterCard | null>(null);
-  const [isloading, setIsloading] = useState(true);
+  const { character, isLoading, isError } = useCharacter(id);
 
-  useEffect(() => {
-    if (!id) return;
-
-    const fetchCharacter = async () => {
-      try {
-        setIsloading(true);
-        const data = await getCharacterById(Number(id));
-        setCharacter(data);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setIsloading(false);
-      }
-    };
-
-    fetchCharacter();
-  }, [id]);
-
-  if (isloading) {
+  if (isLoading) {
     return (
       <div className='characterPage container'>
         <Loader
@@ -41,6 +19,10 @@ export const CharacterPage = memo(() => {
         />
       </div>
     );
+  }
+
+  if (isError) {
+    return <div className='characterPage container'>{isError}</div>;
   }
 
   if (!character) {
@@ -113,4 +95,4 @@ export const CharacterPage = memo(() => {
       </div>
     </>
   );
-});
+};

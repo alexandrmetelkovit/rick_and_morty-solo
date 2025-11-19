@@ -1,73 +1,33 @@
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo } from 'react';
 
-import toast from 'react-hot-toast';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { Loader } from '@/shared/components';
-import { getCharacters, getErrorMessage } from '@/shared/api';
 import bannerImg from '@/assets/images/page-content/banner.png';
-import { CharacterCard, FilterPanel, type ICharacterCard } from '@/widgets';
+import { CharacterCard, FilterPanel } from '@/widgets';
 
 import './CharacterList.scss';
+import { useCharacters } from '@/hooks/useCharacters';
 
 export const CharactersList = memo(() => {
-  const [characters, setCharacters] = useState<ICharacterCard[]>([]);
-  const [page, setPage] = useState<number>(1);
-  const [hasMore, setHasMore] = useState(true);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [errorText, setErrorText] = useState<string>('');
+  const {
+    characters,
+    hasMore,
+    isLoading,
+    errorText,
 
-  const [filterName, setFilterName] = useState('');
-  const [filterSpecies, setFilterSpecies] = useState('');
-  const [filterGender, setFilterGender] = useState('');
-  const [filterStatus, setFilterStatus] = useState('');
+    filterName,
+    filterSpecies,
+    filterGender,
+    filterStatus,
 
-  const handleUpdateCharacter = useCallback(
-    (updated: Partial<ICharacterCard> & { id: number }) => {
-      setCharacters((prev) =>
-        prev.map((character) =>
-          character.id === updated.id ? { ...character, ...updated } : character
-        )
-      );
-    },
-    []
-  );
-
-  useEffect(() => {
-    const fetchCharacters = async () => {
-      try {
-        setIsLoading(true);
-        setErrorText('');
-
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-
-        const { results, hasNextPage } = await getCharacters(page, {
-          name: filterName,
-          species: filterSpecies,
-          gender: filterGender,
-          status: filterStatus
-        });
-
-        setCharacters((prev) => (page === 1 ? results : [...prev, ...results]));
-
-        setHasMore(hasNextPage);
-
-        await new Promise((r) => setTimeout(r, 1000));
-      } catch (error) {
-        const message = getErrorMessage(error);
-
-        toast.error(message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchCharacters();
-  }, [page, filterName, filterSpecies, filterGender, filterStatus]);
-
-  useEffect(() => {
-    setPage(1);
-  }, [filterName, filterSpecies, filterGender, filterStatus]);
+    setPage,
+    setFilterName,
+    setFilterSpecies,
+    setFilterGender,
+    setFilterStatus,
+    updatedCharacter
+  } = useCharacters();
 
   return (
     <div className='characters container'>
@@ -121,7 +81,7 @@ export const CharactersList = memo(() => {
                 <li key={character.id}>
                   <CharacterCard
                     {...character}
-                    onUpdate={handleUpdateCharacter}
+                    onUpdate={updatedCharacter}
                   />
                 </li>
               ))}

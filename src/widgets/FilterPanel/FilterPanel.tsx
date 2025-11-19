@@ -1,5 +1,3 @@
-import { memo } from 'react';
-
 import { Select, TextInput } from '@/shared/components';
 import IconSearchTextInput from '@/assets/icons/search_icon.svg?react';
 import {
