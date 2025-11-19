@@ -7,8 +7,6 @@ import { Footer, Header, PageContent } from '@/shared/components';
 import './App.css';
 
 function App() {
-  const textFooter = 'Made with love AlexanderMetelkov';
-
   return (
     <>
       <Header />
@@ -30,7 +28,7 @@ function App() {
 
       <Toaster position='bottom-right' />
 
-      <Footer text={textFooter} />
+      <Footer />
     </>
   );
 }

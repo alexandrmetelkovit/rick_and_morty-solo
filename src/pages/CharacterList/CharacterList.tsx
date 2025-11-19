@@ -25,7 +25,9 @@ export const CharactersList = memo(() => {
   const handleUpdateCharacter = useCallback(
     (updated: Partial<ICharacterCard> & { id: number }) => {
       setCharacters((prev) =>
-        prev.map((c) => (c.id === updated.id ? { ...c, ...updated } : c))
+        prev.map((character) =>
+          character.id === updated.id ? { ...character, ...updated } : character
+        )
       );
     },
     []

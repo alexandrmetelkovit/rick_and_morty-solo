@@ -67,9 +67,9 @@ export const CharacterCard = memo(
       setCurrentName(value);
 
       if (value.trim().length < 3) {
-        setNameError('Минимум 3 символа');
+        setNameError('Minimum 3 characters');
       } else if (value.trim().length > 25) {
-        setNameError('Максимум 25 символов');
+        setNameError('Maximum 25 characters');
       } else {
         setNameError('');
       }
@@ -79,9 +79,9 @@ export const CharacterCard = memo(
       setCurrentLocation(value);
 
       if (value.trim().length < 3) {
-        setLocationError('Минимум 3 символа');
+        setLocationError('Minimum 3 characters');
       } else if (value.trim().length > 40) {
-        setLocationError('Максимум 40 символов');
+        setLocationError('Maximum 40 characters');
       } else {
         setLocationError('');
       }
