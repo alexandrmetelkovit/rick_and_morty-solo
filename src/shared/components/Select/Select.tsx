@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 
 import { cn } from '@/shared/helpers';
 import IconArrowDownFilter from '@/assets/icons/arrow_filter-down.svg?react';
@@ -14,11 +14,11 @@ export interface ISelectOptionContentProps<T> {
   option?: IPropsOptions<T>;
 }
 
-export const DefaultSelectOptionContent = <T,>({
-  option
-}: ISelectOptionContentProps<T>) => {
-  return <>{option?.label}</>;
-};
+export const DefaultSelectOptionContent = memo(
+  <T,>({ option }: ISelectOptionContentProps<T>) => {
+    return <>{option?.label}</>;
+  }
+);
 
 type TModeSelect = 'medium' | 'small';
 
@@ -31,7 +31,7 @@ interface ISelectProps<T> {
   SelectOptionComponent?: React.FC<ISelectOptionContentProps<T>>;
 }
 
-export const Select = <T extends string | undefined>({
+export const Select = <T extends string>({
   options,
   mode = 'medium',
   value,

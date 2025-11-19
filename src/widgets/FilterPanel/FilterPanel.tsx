@@ -29,6 +29,10 @@ export const FilterPanel = ({
   onChangeGender,
   onChangeStatus
 }: IFilterPanelProps) => {
+  const handleNameChange = (value: string) => {
+    onChangeName(value);
+  };
+
   const handleSpeciesChange = (value: string) => {
     onChangeSpecies(value);
   };
@@ -47,7 +51,7 @@ export const FilterPanel = ({
         value={name}
         placeholder='Filter by name...'
         mode='bordered'
-        onChange={onChangeName}
+        onChange={handleNameChange}
         IconComponent={IconSearchTextInput}
       />
 

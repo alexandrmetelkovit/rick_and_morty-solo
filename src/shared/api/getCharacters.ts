@@ -1,7 +1,8 @@
-import { $api } from './api';
-
-import type { ICharacterCard } from '../types';
 import axios from 'axios';
+
+import type { ICharacterCard } from '@/widgets';
+
+import { $api } from './api';
 
 export const getCharacters = async (
   page: number,
