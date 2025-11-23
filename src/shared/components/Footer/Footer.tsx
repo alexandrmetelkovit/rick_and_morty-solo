@@ -1,13 +1,9 @@
 import './Footer.scss';
 
-interface IFooterProps {
-  text: string;
-}
-
-export const Footer = ({ text }: IFooterProps) => {
+export const Footer = () => {
   return (
     <footer className='footer'>
-      <p className='footer__text'>{text}</p>
+      <p className='footer__text'>Made with love AlexanderMetelkov</p>
     </footer>
   );
 };
