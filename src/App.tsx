@@ -12,14 +12,14 @@ function App() {
       <Header />
 
       <PageContent>
-        <BrowserRouter>
+        <BrowserRouter basename='/rick_and_morty-solo'>
           <Routes>
             <Route
               path='/'
               element={<CharactersList />}
             />
             <Route
-              path='character/:id'
+              path='/character/:id'
               element={<CharacterPage />}
             />
           </Routes>
