@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, Navigate, useParams } from 'react-router-dom';
 
 import { useCharacter } from '@/hooks/useCharacter';
 import { Loader } from '@/shared/components/Loader/Loader';
@@ -22,7 +22,14 @@ export const CharacterPage = () => {
   }
 
   if (isError) {
-    return <div className='characterPage container'>{isError}</div>;
+    return (
+      <div className='characterPage container'>
+        <Navigate
+          to='/404'
+          replace
+        />
+      </div>
+    );
   }
 
   if (!character) {

@@ -1,5 +1,5 @@
+import React from 'react';
 import { memo } from 'react';
-import type React from 'react';
 
 interface IPageContenProps {
   children: React.ReactNode;

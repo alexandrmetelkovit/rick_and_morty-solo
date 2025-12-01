@@ -60,7 +60,7 @@ export const CharactersList = memo(() => {
         ) : errorText ? (
           <p className='characters__error'>{errorText}</p>
         ) : characters.length === 0 ? (
-          <p className='characters__empty'>Character list is empty</p>
+          <p className='characters__empty'>Character list is empty...</p>
         ) : (
           <InfiniteScroll
             dataLength={characters.length || 0}
@@ -76,7 +76,7 @@ export const CharactersList = memo(() => {
             }
             style={{ overflow: 'visible' }}
           >
-            <ul className='characters__list'>
+            <ol className='characters__list'>
               {characters.map((character) => (
                 <li key={character.id}>
                   <CharacterCard
@@ -85,7 +85,7 @@ export const CharactersList = memo(() => {
                   />
                 </li>
               ))}
-            </ul>
+            </ol>
           </InfiniteScroll>
         )}
       </div>
