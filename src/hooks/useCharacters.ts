@@ -18,10 +18,22 @@ export const useCharacters = () => {
   const [filterGender, setFilterGender] = useState('');
   const [filterStatus, setFilterStatus] = useState('');
 
-  const debouncedFilterName = useDebounce(filterName, 500);
-  const debouncedFilterSpecies = useDebounce(filterSpecies, 500);
-  const debouncedFilterGender = useDebounce(filterGender, 500);
-  const debouncedFilterStatus = useDebounce(filterStatus, 500);
+  const { debounced: debouncedFilterName, isDebouncing: isNameDebouncing } =
+    useDebounce(filterName, 500);
+  const {
+    debounced: debouncedFilterSpecies,
+    isDebouncing: isSpeciesDebouncing
+  } = useDebounce(filterSpecies, 500);
+  const { debounced: debouncedFilterGender, isDebouncing: isGenderDebouncing } =
+    useDebounce(filterGender, 500);
+  const { debounced: debouncedFilterStatus, isDebouncing: isStatusDebouncing } =
+    useDebounce(filterStatus, 500);
+
+  const isFilterLoading =
+    isNameDebouncing ||
+    isSpeciesDebouncing ||
+    isGenderDebouncing ||
+    isStatusDebouncing;
 
   const updatedCharacter = useCallback(
     (updated: Partial<ICharacterCard> & { id: number }) => {
@@ -56,7 +68,7 @@ export const useCharacters = () => {
         await new Promise((r) => setTimeout(r, 1000));
       } catch (error) {
         const message = getErrorMessage(error);
-
+        setErrorText(message);
         toast.error(message);
       } finally {
         setIsLoading(false);
@@ -87,6 +99,7 @@ export const useCharacters = () => {
     hasMore,
     isLoading,
     errorText,
+    isFilterLoading,
 
     filterName,
     filterSpecies,

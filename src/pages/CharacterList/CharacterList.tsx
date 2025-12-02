@@ -13,8 +13,9 @@ export const CharactersList = memo(() => {
   const {
     characters,
     hasMore,
-    isLoading,
     errorText,
+    isLoading,
+    isFilterLoading,
 
     filterName,
     filterSpecies,
@@ -64,11 +65,12 @@ export const CharactersList = memo(() => {
         ) : (
           <InfiniteScroll
             dataLength={characters.length || 0}
-            next={() => setPage((page) => page + 1)}
-            hasMore={hasMore}
+            next={() => !isFilterLoading && setPage((page) => page + 1)}
+            hasMore={hasMore && !isFilterLoading}
             loader={<Loader size='small' />}
             endMessage={
-              characters.length < 1 && (
+              !hasMore &&
+              characters.length > 1 && (
                 <p style={{ textAlign: 'center', paddingTop: '20px' }}>
                   End of list
                 </p>
