@@ -13,27 +13,31 @@ export const useCharacters = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorText, setErrorText] = useState<string>('');
 
+  const [inputName, setInputName] = useState('');
+  const [inputSpecies, setInputSpecies] = useState('');
+  const [inputGender, setInputGender] = useState('');
+  const [inputStatus, setInputStatus] = useState('');
+
   const [filterName, setFilterName] = useState('');
   const [filterSpecies, setFilterSpecies] = useState('');
   const [filterGender, setFilterGender] = useState('');
   const [filterStatus, setFilterStatus] = useState('');
 
-  const { debounced: debouncedFilterName, isDebouncing: isNameDebouncing } =
-    useDebounce(filterName, 500);
-  const {
-    debounced: debouncedFilterSpecies,
-    isDebouncing: isSpeciesDebouncing
-  } = useDebounce(filterSpecies, 500);
-  const { debounced: debouncedFilterGender, isDebouncing: isGenderDebouncing } =
-    useDebounce(filterGender, 500);
-  const { debounced: debouncedFilterStatus, isDebouncing: isStatusDebouncing } =
-    useDebounce(filterStatus, 500);
+  const debouncedSetName = useDebounce((value: string) => {
+    setFilterName(value);
+  }, 500);
 
-  const isFilterLoading =
-    isNameDebouncing ||
-    isSpeciesDebouncing ||
-    isGenderDebouncing ||
-    isStatusDebouncing;
+  const debouncedSetSpecies = useDebounce((value: string) => {
+    setFilterSpecies(value);
+  }, 500);
+
+  const debouncedSetGender = useDebounce((value: string) => {
+    setFilterGender(value);
+  }, 500);
+
+  const debouncedSetStatus = useDebounce((value: string) => {
+    setFilterStatus(value);
+  }, 500);
 
   const updatedCharacter = useCallback(
     (updated: Partial<ICharacterCard> & { id: number }) => {
@@ -55,10 +59,10 @@ export const useCharacters = () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
         const { results, hasNextPage } = await getCharacters(page, {
-          name: debouncedFilterName,
-          species: debouncedFilterSpecies,
-          gender: debouncedFilterGender,
-          status: debouncedFilterStatus
+          name: filterName,
+          species: filterSpecies,
+          gender: filterGender,
+          status: filterStatus
         });
 
         setCharacters((prev) => (page === 1 ? results : [...prev, ...results]));
@@ -76,30 +80,23 @@ export const useCharacters = () => {
     };
 
     fetchCharacters();
-  }, [
-    page,
-    debouncedFilterName,
-    debouncedFilterSpecies,
-    debouncedFilterGender,
-    debouncedFilterStatus
-  ]);
+  }, [page, filterName, filterSpecies, filterGender, filterStatus]);
 
   useEffect(() => {
     setCharacters([]);
     setPage(1);
-  }, [
-    debouncedFilterName,
-    debouncedFilterSpecies,
-    debouncedFilterGender,
-    debouncedFilterStatus
-  ]);
+  }, [filterName, filterSpecies, filterGender, filterStatus]);
 
   return {
     characters,
     hasMore,
     isLoading,
     errorText,
-    isFilterLoading,
+
+    inputName,
+    inputSpecies,
+    inputGender,
+    inputStatus,
 
     filterName,
     filterSpecies,
@@ -107,10 +104,16 @@ export const useCharacters = () => {
     filterStatus,
 
     setPage,
-    setFilterName,
-    setFilterSpecies,
-    setFilterGender,
-    setFilterStatus,
+    setInputName,
+    setInputSpecies,
+    setInputGender,
+    setInputStatus,
+
+    debouncedSetName,
+    debouncedSetSpecies,
+    debouncedSetGender,
+    debouncedSetStatus,
+
     updatedCharacter
   };
 };

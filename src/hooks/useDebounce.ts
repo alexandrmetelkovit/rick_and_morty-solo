@@ -1,21 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useRef, useCallback } from 'react';
 
-export const useDebounce = (value: string, delay = 500) => {
-  const [debounced, setDebounced] = useState(value);
-  const [isDebouncing, setIsDebouncing] = useState(false);
+export const useDebounce = (
+  callback: (value: string) => void,
+  delay: number
+) => {
+  const timeoutRef = useRef<number | null>(null);
 
-  useEffect(() => {
-    setIsDebouncing(true);
+  return useCallback(
+    (value: string) => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
 
-    const handler = setTimeout(() => {
-      setDebounced(value);
-      setIsDebouncing(false);
-    }, delay);
-
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [value, delay]);
-
-  return { debounced, isDebouncing };
+      timeoutRef.current = window.setTimeout(() => {
+        callback(value);
+      }, delay);
+    },
+    [callback, delay]
+  );
 };

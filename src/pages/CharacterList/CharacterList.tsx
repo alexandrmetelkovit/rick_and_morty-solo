@@ -15,18 +15,22 @@ export const CharactersList = memo(() => {
     hasMore,
     errorText,
     isLoading,
-    isFilterLoading,
 
-    filterName,
-    filterSpecies,
-    filterGender,
-    filterStatus,
+    inputName,
+    inputSpecies,
+    inputGender,
+    inputStatus,
+
+    setInputName,
+    setInputSpecies,
+    setInputGender,
+    setInputStatus,
 
     setPage,
-    setFilterName,
-    setFilterSpecies,
-    setFilterGender,
-    setFilterStatus,
+    debouncedSetName,
+    debouncedSetSpecies,
+    debouncedSetGender,
+    debouncedSetStatus,
     updatedCharacter
   } = useCharacters();
 
@@ -43,14 +47,26 @@ export const CharactersList = memo(() => {
 
       <div className='characters__body'>
         <FilterPanel
-          name={filterName}
-          species={filterSpecies}
-          gender={filterGender}
-          status={filterStatus}
-          onChangeName={setFilterName}
-          onChangeSpecies={setFilterSpecies}
-          onChangeGender={setFilterGender}
-          onChangeStatus={setFilterStatus}
+          name={inputName}
+          species={inputSpecies}
+          gender={inputGender}
+          status={inputStatus}
+          onChangeName={(value) => {
+            setInputName(value);
+            debouncedSetName(value);
+          }}
+          onChangeSpecies={(value) => {
+            setInputSpecies(value);
+            debouncedSetSpecies(value);
+          }}
+          onChangeGender={(value) => {
+            setInputGender(value);
+            debouncedSetGender(value);
+          }}
+          onChangeStatus={(value) => {
+            setInputStatus(value);
+            debouncedSetStatus(value);
+          }}
         />
 
         {characters.length === 0 && isLoading ? (
@@ -65,8 +81,8 @@ export const CharactersList = memo(() => {
         ) : (
           <InfiniteScroll
             dataLength={characters.length || 0}
-            next={() => !isFilterLoading && setPage((page) => page + 1)}
-            hasMore={hasMore && !isFilterLoading}
+            next={() => setPage((page) => page + 1)}
+            hasMore={hasMore}
             loader={<Loader size='small' />}
             endMessage={
               !hasMore &&
