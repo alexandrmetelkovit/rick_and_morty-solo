@@ -1,7 +1,7 @@
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import { CharacterPage, CharactersList } from '@/pages';
+import { CharacterPage, CharactersList, NotFoundPage } from '@/pages';
 import { Footer, Header, PageContent } from '@/shared/components';
 
 import './App.css';
@@ -21,6 +21,10 @@ function App() {
             <Route
               path='/character/:id'
               element={<CharacterPage />}
+            />
+            <Route
+              path='*'
+              element={<NotFoundPage />}
             />
           </Routes>
         </BrowserRouter>

@@ -13,19 +13,13 @@ export const CharactersList = memo(() => {
   const {
     characters,
     hasMore,
-    isLoading,
     errorText,
+    isLoading,
 
-    filterName,
-    filterSpecies,
-    filterGender,
-    filterStatus,
+    uiFilters,
+    onChangeFilters,
 
     setPage,
-    setFilterName,
-    setFilterSpecies,
-    setFilterGender,
-    setFilterStatus,
     updatedCharacter
   } = useCharacters();
 
@@ -42,14 +36,8 @@ export const CharactersList = memo(() => {
 
       <div className='characters__body'>
         <FilterPanel
-          name={filterName}
-          species={filterSpecies}
-          gender={filterGender}
-          status={filterStatus}
-          onChangeName={setFilterName}
-          onChangeSpecies={setFilterSpecies}
-          onChangeGender={setFilterGender}
-          onChangeStatus={setFilterStatus}
+          filters={uiFilters}
+          onChangeFilters={onChangeFilters}
         />
 
         {characters.length === 0 && isLoading ? (
@@ -60,7 +48,7 @@ export const CharactersList = memo(() => {
         ) : errorText ? (
           <p className='characters__error'>{errorText}</p>
         ) : characters.length === 0 ? (
-          <p className='characters__empty'>Character list is empty</p>
+          <p className='characters__empty'>Character list is empty...</p>
         ) : (
           <InfiniteScroll
             dataLength={characters.length || 0}
@@ -68,7 +56,8 @@ export const CharactersList = memo(() => {
             hasMore={hasMore}
             loader={<Loader size='small' />}
             endMessage={
-              characters.length < 1 && (
+              !hasMore &&
+              characters.length > 1 && (
                 <p style={{ textAlign: 'center', paddingTop: '20px' }}>
                   End of list
                 </p>
@@ -76,7 +65,7 @@ export const CharactersList = memo(() => {
             }
             style={{ overflow: 'visible' }}
           >
-            <ul className='characters__list'>
+            <ol className='characters__list'>
               {characters.map((character) => (
                 <li key={character.id}>
                   <CharacterCard
@@ -85,7 +74,7 @@ export const CharactersList = memo(() => {
                   />
                 </li>
               ))}
-            </ul>
+            </ol>
           </InfiniteScroll>
         )}
       </div>

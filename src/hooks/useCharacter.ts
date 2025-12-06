@@ -16,7 +16,9 @@ export const useCharacter = (id?: string) => {
     const fetchCharacter = async () => {
       try {
         setIsLoading(true);
+
         const data = await getCharacterById(Number(id));
+
         setCharacter(data);
       } catch (err) {
         if (!axios.isCancel(err)) {

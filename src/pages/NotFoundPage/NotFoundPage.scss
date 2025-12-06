@@ -1,0 +1,32 @@
+.notFoundPage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: 70vh;
+
+  &__image {
+    width: 540px;
+    height: 333px;
+    object-fit: cover;
+  }
+
+  &__back {
+    width: 240px;
+    height: 56px;
+    border: 1px solid #00000061;
+    font-family: Karla, sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: 0.2s all ease-in;
+    cursor: pointer;
+  }
+
+  &__back:hover {
+    opacity: 0.7;
+  }
+}
