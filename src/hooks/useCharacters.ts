@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import toast from 'react-hot-toast';
 
-import type { ICharacterCard } from '@/widgets';
+import type { ICharacterCard, ICharacterFilters } from '@/widgets';
 import { getCharacters, getErrorMessage } from '@/shared/api';
 import { useDebounce } from './useDebounce';
 
@@ -13,31 +13,28 @@ export const useCharacters = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorText, setErrorText] = useState<string>('');
 
-  const [inputName, setInputName] = useState('');
-  const [inputSpecies, setInputSpecies] = useState('');
-  const [inputGender, setInputGender] = useState('');
-  const [inputStatus, setInputStatus] = useState('');
+  const [uiFilters, setUiFilters] = useState({
+    name: '',
+    species: '',
+    gender: '',
+    status: ''
+  });
 
-  const [filterName, setFilterName] = useState('');
-  const [filterSpecies, setFilterSpecies] = useState('');
-  const [filterGender, setFilterGender] = useState('');
-  const [filterStatus, setFilterStatus] = useState('');
+  const [filters, setFilters] = useState({
+    name: '',
+    species: '',
+    gender: '',
+    status: ''
+  });
 
-  const debouncedSetName = useDebounce((value: string) => {
-    setFilterName(value);
+  const debouncedSetFilters = useDebounce<ICharacterFilters>((nextFilters) => {
+    setFilters(nextFilters);
   }, 500);
 
-  const debouncedSetSpecies = useDebounce((value: string) => {
-    setFilterSpecies(value);
-  }, 500);
-
-  const debouncedSetGender = useDebounce((value: string) => {
-    setFilterGender(value);
-  }, 500);
-
-  const debouncedSetStatus = useDebounce((value: string) => {
-    setFilterStatus(value);
-  }, 500);
+  const handleFilterChange = (nextFilters: ICharacterFilters) => {
+    setUiFilters(nextFilters);
+    debouncedSetFilters(nextFilters);
+  };
 
   const updatedCharacter = useCallback(
     (updated: Partial<ICharacterCard> & { id: number }) => {
@@ -58,12 +55,7 @@ export const useCharacters = () => {
 
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
-        const { results, hasNextPage } = await getCharacters(page, {
-          name: filterName,
-          species: filterSpecies,
-          gender: filterGender,
-          status: filterStatus
-        });
+        const { results, hasNextPage } = await getCharacters(page, filters);
 
         setCharacters((prev) => (page === 1 ? results : [...prev, ...results]));
 
@@ -80,12 +72,12 @@ export const useCharacters = () => {
     };
 
     fetchCharacters();
-  }, [page, filterName, filterSpecies, filterGender, filterStatus]);
+  }, [page, filters]);
 
   useEffect(() => {
     setCharacters([]);
     setPage(1);
-  }, [filterName, filterSpecies, filterGender, filterStatus]);
+  }, [filters]);
 
   return {
     characters,
@@ -93,27 +85,10 @@ export const useCharacters = () => {
     isLoading,
     errorText,
 
-    inputName,
-    inputSpecies,
-    inputGender,
-    inputStatus,
-
-    filterName,
-    filterSpecies,
-    filterGender,
-    filterStatus,
+    uiFilters,
+    onChangeFilters: handleFilterChange,
 
     setPage,
-    setInputName,
-    setInputSpecies,
-    setInputGender,
-    setInputStatus,
-
-    debouncedSetName,
-    debouncedSetSpecies,
-    debouncedSetGender,
-    debouncedSetStatus,
-
     updatedCharacter
   };
 };

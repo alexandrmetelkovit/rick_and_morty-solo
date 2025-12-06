@@ -16,21 +16,10 @@ export const CharactersList = memo(() => {
     errorText,
     isLoading,
 
-    inputName,
-    inputSpecies,
-    inputGender,
-    inputStatus,
-
-    setInputName,
-    setInputSpecies,
-    setInputGender,
-    setInputStatus,
+    uiFilters,
+    onChangeFilters,
 
     setPage,
-    debouncedSetName,
-    debouncedSetSpecies,
-    debouncedSetGender,
-    debouncedSetStatus,
     updatedCharacter
   } = useCharacters();
 
@@ -47,26 +36,8 @@ export const CharactersList = memo(() => {
 
       <div className='characters__body'>
         <FilterPanel
-          name={inputName}
-          species={inputSpecies}
-          gender={inputGender}
-          status={inputStatus}
-          onChangeName={(value) => {
-            setInputName(value);
-            debouncedSetName(value);
-          }}
-          onChangeSpecies={(value) => {
-            setInputSpecies(value);
-            debouncedSetSpecies(value);
-          }}
-          onChangeGender={(value) => {
-            setInputGender(value);
-            debouncedSetGender(value);
-          }}
-          onChangeStatus={(value) => {
-            setInputStatus(value);
-            debouncedSetStatus(value);
-          }}
+          filters={uiFilters}
+          onChangeFilters={onChangeFilters}
         />
 
         {characters.length === 0 && isLoading ? (
