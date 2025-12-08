@@ -1,4 +1,3 @@
-import { Select, TextInput } from '@/shared/components';
 import IconSearchTextInput from '@/assets/icons/search_icon.svg?react';
 import {
   GENDER_OPTIONS,
@@ -7,48 +6,51 @@ import {
 } from '@/shared/constants';
 
 import './FilterPanel.scss';
+import { Select, TextInput } from '@/shared/components';
 
-export interface IFilterPanelProps {
+export interface ICharacterFilters {
   name: string;
   species: string;
   gender: string;
   status: string;
-  onChangeName: (value: string) => void;
-  onChangeSpecies: (value: string) => void;
-  onChangeGender: (value: string) => void;
-  onChangeStatus: (value: string) => void;
+}
+
+export interface IFilterPanelProps {
+  filters: ICharacterFilters;
+  onChangeFilters: (filters: ICharacterFilters) => void;
 }
 
 export const FilterPanel = ({
-  name,
-  species,
-  gender,
-  status,
-  onChangeName,
-  onChangeSpecies,
-  onChangeGender,
-  onChangeStatus
+  filters,
+  onChangeFilters
 }: IFilterPanelProps) => {
+  const updateFilter = (key: keyof ICharacterFilters, value: string) => {
+    onChangeFilters({
+      ...filters,
+      [key]: value
+    });
+  };
+
   const handleNameChange = (value: string) => {
-    onChangeName(value);
+    updateFilter('name', value);
   };
 
   const handleSpeciesChange = (value: string) => {
-    onChangeSpecies(value);
+    updateFilter('species', value);
   };
 
   const handleGenderChange = (value: string) => {
-    onChangeGender(value);
+    updateFilter('gender', value);
   };
 
   const handleStatusChange = (value: string) => {
-    onChangeStatus(value);
+    updateFilter('status', value);
   };
 
   return (
     <div className='filterPanel'>
       <TextInput
-        value={name}
+        value={filters.name}
         placeholder='Filter by name...'
         mode='bordered'
         onChange={handleNameChange}
@@ -58,14 +60,14 @@ export const FilterPanel = ({
       <Select
         mode='medium'
         placeholder='Species'
-        value={species}
+        value={filters.species}
         onChange={handleSpeciesChange}
         options={SPECIES_OPTIONS}
       />
       <Select
         mode='medium'
         placeholder='Gender'
-        value={gender}
+        value={filters.gender}
         onChange={handleGenderChange}
         options={GENDER_OPTIONS}
       />
@@ -73,7 +75,7 @@ export const FilterPanel = ({
       <Select
         mode='medium'
         placeholder='Status'
-        value={status}
+        value={filters.status}
         onChange={handleStatusChange}
         options={STATUS_OPTIONS}
       />

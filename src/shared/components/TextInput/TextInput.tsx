@@ -31,7 +31,7 @@ export const TextInput = memo(
           textInput_underlined: mode === 'underlined'
         })}
       >
-        <div className='textInput-inner'>
+        <div className='textInput__wrapper'>
           {IconComponent && <IconComponent className='textInput__icon' />}
           <input
             type='text'
