@@ -2,7 +2,12 @@ import { Toaster } from 'react-hot-toast';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { CharacterPage, CharactersList, NotFoundPage } from '@/pages';
-import { Footer, Header, PageContent } from '@/shared/components';
+import {
+  ErrorBoundary,
+  Footer,
+  Header,
+  PageContent
+} from '@/shared/components';
 
 import './App.css';
 
@@ -16,15 +21,27 @@ function App() {
           <Routes>
             <Route
               path='/'
-              element={<CharactersList />}
+              element={
+                <ErrorBoundary>
+                  <CharactersList />
+                </ErrorBoundary>
+              }
             />
             <Route
               path='/character/:id'
-              element={<CharacterPage />}
+              element={
+                <ErrorBoundary>
+                  <CharacterPage />
+                </ErrorBoundary>
+              }
             />
             <Route
               path='*'
-              element={<NotFoundPage />}
+              element={
+                <ErrorBoundary>
+                  <NotFoundPage />
+                </ErrorBoundary>
+              }
             />
           </Routes>
         </BrowserRouter>
