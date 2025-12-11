@@ -1,0 +1,15 @@
+.errorBoundary {
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  &__text {
+    font-size: 30px;
+    font-weight: 500;
+    width: 100%;
+    text-align: center;
+    color: rgb(157, 49, 49);
+  }
+}

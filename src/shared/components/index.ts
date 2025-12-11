@@ -5,3 +5,4 @@ export * from './CircleStatus/CircleStatus';
 export * from './Select/Select';
 export * from './TextInput/TextInput';
 export * from './Loader/Loader';
+export * from './ErrorBoundary/ErrorBoundary';
