@@ -14,42 +14,32 @@ import './App.css';
 function App() {
   return (
     <>
-      <Header />
+      <ErrorBoundary>
+        <Header />
 
-      <PageContent>
-        <BrowserRouter basename='/rick_and_morty-solo'>
-          <Routes>
-            <Route
-              path='/'
-              element={
-                <ErrorBoundary>
-                  <CharactersList />
-                </ErrorBoundary>
-              }
-            />
-            <Route
-              path='/character/:id'
-              element={
-                <ErrorBoundary>
-                  <CharacterPage />
-                </ErrorBoundary>
-              }
-            />
-            <Route
-              path='*'
-              element={
-                <ErrorBoundary>
-                  <NotFoundPage />
-                </ErrorBoundary>
-              }
-            />
-          </Routes>
-        </BrowserRouter>
-      </PageContent>
+        <PageContent>
+          <BrowserRouter basename='/rick_and_morty-solo'>
+            <Routes>
+              <Route
+                path='/'
+                element={<CharactersList />}
+              />
+              <Route
+                path='/character/:id'
+                element={<CharacterPage />}
+              />
+              <Route
+                path='*'
+                element={<NotFoundPage />}
+              />
+            </Routes>
+          </BrowserRouter>
+        </PageContent>
 
-      <Toaster position='bottom-right' />
+        <Toaster position='bottom-right' />
 
-      <Footer />
+        <Footer />
+      </ErrorBoundary>
     </>
   );
 }

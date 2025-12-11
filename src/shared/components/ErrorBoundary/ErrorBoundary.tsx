@@ -1,5 +1,7 @@
 import { Component, type ReactNode } from 'react';
 
+import './ErrorBoundary.scss';
+
 interface ErrorBoundaryProps {
   children: ReactNode;
 }
@@ -25,18 +27,16 @@ export class ErrorBoundary extends Component<
   }
 
   render() {
-    if (this.state.error)
+    if (this.state.error) {
       return (
-        <div
-          style={{
-            color: 'red',
-            display: 'flex',
-            justifyContent: 'center'
-          }}
-        >
-          Something went wrong!
+        <div className='errorBoundary'>
+          <p className='errorBoundary__text'>
+            An unexpected error occurred. Please try again or refresh the
+            page.😔
+          </p>
         </div>
       );
+    }
 
     return this.props.children;
   }

@@ -23,8 +23,6 @@ export const CharactersList = memo(() => {
     updatedCharacter
   } = useCharacters();
 
-  throw new Error('error!!');
-
   return (
     <div className='characters container'>
       <div className='characters__banner'>
