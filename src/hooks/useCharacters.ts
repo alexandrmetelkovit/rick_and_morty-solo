@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 
+import axios from 'axios';
 import toast from 'react-hot-toast';
 
-import type { ICharacterCard, ICharacterFilters } from '@/widgets';
 import { getCharacters, getErrorMessage } from '@/shared/api';
-import { useDebounce } from './useDebounce';
+import type { ICharacterCard, ICharacterFilters } from '@/widgets';
 
+import { useDebounce } from './useDebounce';
 export const useCharacters = () => {
   const [characters, setCharacters] = useState<ICharacterCard[]>([]);
   const [page, setPage] = useState<number>(1);
@@ -48,6 +49,8 @@ export const useCharacters = () => {
   );
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchCharacters = async () => {
       try {
         setIsLoading(true);
@@ -55,7 +58,11 @@ export const useCharacters = () => {
 
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
-        const { results, hasNextPage } = await getCharacters(page, filters);
+        const { results, hasNextPage } = await getCharacters(
+          page,
+          filters,
+          controller.signal
+        );
 
         setCharacters((prev) => (page === 1 ? results : [...prev, ...results]));
 
@@ -63,6 +70,10 @@ export const useCharacters = () => {
 
         await new Promise((r) => setTimeout(r, 1000));
       } catch (error) {
+        if (axios.isCancel(error)) {
+          return;
+        }
+
         const message = getErrorMessage(error);
         setErrorText(message);
         toast.error(message);
@@ -72,6 +83,10 @@ export const useCharacters = () => {
     };
 
     fetchCharacters();
+
+    return () => {
+      controller.abort();
+    };
   }, [page, filters]);
 
   useEffect(() => {
