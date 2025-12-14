@@ -11,14 +11,16 @@ export const getCharacters = async (
     species?: string;
     gender?: string;
     status?: string;
-  }
+  },
+  signal?: AbortSignal
 ) => {
   try {
     const response = await $api.get('character', {
       params: {
         page,
         ...filters
-      }
+      },
+      signal
     });
 
     const results = response.data.results.map((character: ICharacterCard) => ({
