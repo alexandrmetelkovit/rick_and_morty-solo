@@ -53,13 +53,11 @@ export const CharacterCard = memo(
     onUpdate
   }: ICharacterCard) => {
     const [isEdit, setIsEdit] = useState<boolean>(false);
-
     const [currentName, setCurrentName] = useState<string>(name);
     const [currentLocation, setCurrentLocation] = useState<string>(
       location.name
     );
     const [statusValue, setStatusValue] = useState<TStatus>(status);
-
     const [nameError, setNameError] = useState('');
     const [locationError, setLocationError] = useState('');
 
