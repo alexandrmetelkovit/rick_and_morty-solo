@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useTransition } from 'react';
 
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -6,13 +6,15 @@ import toast from 'react-hot-toast';
 import { getCharacters, getErrorMessage } from '@/shared/api';
 import type { ICharacterCard, ICharacterFilters } from '@/widgets';
 
-import { useDebounce } from './useDebounce';
+// import { useDebounce } from './useDebounce';
+
 export const useCharacters = () => {
   const [characters, setCharacters] = useState<ICharacterCard[]>([]);
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorText, setErrorText] = useState<string>('');
+  const [isPending, startTransition] = useTransition();
 
   const [uiFilters, setUiFilters] = useState({
     name: '',
@@ -28,13 +30,15 @@ export const useCharacters = () => {
     status: ''
   });
 
-  const debouncedSetFilters = useDebounce<ICharacterFilters>((nextFilters) => {
-    setFilters(nextFilters);
-  }, 500);
+  // const debouncedSetFilters = useDebounce<ICharacterFilters>((nextFilters) => {
+  // setFilters(nextFilters);
+  // }, 500);
 
   const handleFilterChange = (nextFilters: ICharacterFilters) => {
     setUiFilters(nextFilters);
-    debouncedSetFilters(nextFilters);
+
+    // debouncedSetFilters(nextFilters);
+    startTransition(() => setFilters(nextFilters));
   };
 
   const updatedCharacter = useCallback(
@@ -56,8 +60,6 @@ export const useCharacters = () => {
         setIsLoading(true);
         setErrorText('');
 
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-
         const { results, hasNextPage } = await getCharacters(
           page,
           filters,
@@ -67,8 +69,6 @@ export const useCharacters = () => {
         setCharacters((prev) => (page === 1 ? results : [...prev, ...results]));
 
         setHasMore(hasNextPage);
-
-        await new Promise((r) => setTimeout(r, 1000));
       } catch (error) {
         if (axios.isCancel(error)) {
           return;
@@ -90,7 +90,6 @@ export const useCharacters = () => {
   }, [page, filters]);
 
   useEffect(() => {
-    setCharacters([]);
     setPage(1);
   }, [filters]);
 
@@ -99,6 +98,7 @@ export const useCharacters = () => {
     hasMore,
     isLoading,
     errorText,
+    isPending,
 
     uiFilters,
     onChangeFilters: handleFilterChange,
