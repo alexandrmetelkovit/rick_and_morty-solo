@@ -1,3 +1,5 @@
+import { Select, TextInput } from '@/shared/components';
+import { useFilters } from '@/shared/contexts';
 import IconSearchTextInput from '@/assets/icons/search_icon.svg?react';
 import {
   GENDER_OPTIONS,
@@ -6,30 +8,9 @@ import {
 } from '@/shared/constants';
 
 import './FilterPanel.scss';
-import { Select, TextInput } from '@/shared/components';
 
-export interface ICharacterFilters {
-  name: string;
-  species: string;
-  gender: string;
-  status: string;
-}
-
-export interface IFilterPanelProps {
-  filters: ICharacterFilters;
-  onChangeFilters: (filters: ICharacterFilters) => void;
-}
-
-export const FilterPanel = ({
-  filters,
-  onChangeFilters
-}: IFilterPanelProps) => {
-  const updateFilter = (key: keyof ICharacterFilters, value: string) => {
-    onChangeFilters({
-      ...filters,
-      [key]: value
-    });
-  };
+export const FilterPanel = () => {
+  const { uiFilters, updateFilter } = useFilters();
 
   const handleNameChange = (value: string) => {
     updateFilter('name', value);
@@ -50,7 +31,7 @@ export const FilterPanel = ({
   return (
     <div className='filterPanel'>
       <TextInput
-        value={filters.name}
+        value={uiFilters.name}
         placeholder='Filter by name...'
         mode='bordered'
         onChange={handleNameChange}
@@ -60,14 +41,14 @@ export const FilterPanel = ({
       <Select
         mode='medium'
         placeholder='Species'
-        value={filters.species}
+        value={uiFilters.species}
         onChange={handleSpeciesChange}
         options={SPECIES_OPTIONS}
       />
       <Select
         mode='medium'
         placeholder='Gender'
-        value={filters.gender}
+        value={uiFilters.gender}
         onChange={handleGenderChange}
         options={GENDER_OPTIONS}
       />
@@ -75,7 +56,7 @@ export const FilterPanel = ({
       <Select
         mode='medium'
         placeholder='Status'
-        value={filters.status}
+        value={uiFilters.status}
         onChange={handleStatusChange}
         options={STATUS_OPTIONS}
       />
