@@ -10,7 +10,7 @@ import {
 } from '@/shared/components';
 
 import './App.css';
-import { FiltersProvider } from './shared/contexts';
+import { CharactersProvider } from './shared/contexts';
 
 function App() {
   return (
@@ -24,9 +24,9 @@ function App() {
               <Route
                 path='/'
                 element={
-                  <FiltersProvider>
+                  <CharactersProvider>
                     <CharactersList />
-                  </FiltersProvider>
+                  </CharactersProvider>
                 }
               />
               <Route

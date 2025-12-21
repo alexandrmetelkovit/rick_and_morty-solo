@@ -1,5 +1,5 @@
+import { useCharactersContext } from '@/shared/contexts';
 import { Select, TextInput } from '@/shared/components';
-import { useFilters } from '@/shared/contexts';
 import IconSearchTextInput from '@/assets/icons/search_icon.svg?react';
 import {
   GENDER_OPTIONS,
@@ -10,7 +10,7 @@ import {
 import './FilterPanel.scss';
 
 export const FilterPanel = () => {
-  const { uiFilters, updateFilter } = useFilters();
+  const { uiFilters, updateFilter } = useCharactersContext();
 
   const handleNameChange = (value: string) => {
     updateFilter('name', value);

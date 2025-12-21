@@ -3,19 +3,18 @@ import { memo } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { Loader } from '@/shared/components';
-import bannerImg from '@/assets/images/page-content/banner.png';
+import { useCharacters } from '@/hooks/useCharacters';
 import { CharacterCard, FilterPanel } from '@/widgets';
+import bannerImg from '@/assets/images/page-content/banner.png';
 
 import './CharacterList.scss';
-import { useCharacters } from '@/hooks/useCharacters';
 
 export const CharactersList = memo(() => {
   const {
     characters,
     hasMore,
-    errorText,
     isLoading,
-
+    errorText,
     setPage,
     updatedCharacter
   } = useCharacters();

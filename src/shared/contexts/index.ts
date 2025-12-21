@@ -1,2 +1,2 @@
-export * from './FiltersContext';
-export * from './FiltersProvider';
+export * from './CharactersContext';
+export * from './CharactersProvider';
