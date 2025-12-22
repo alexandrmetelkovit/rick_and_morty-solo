@@ -10,6 +10,7 @@ import {
 } from '@/shared/components';
 
 import './App.css';
+import { CharactersProvider } from './shared/contexts';
 
 function App() {
   return (
@@ -22,7 +23,11 @@ function App() {
             <Routes>
               <Route
                 path='/'
-                element={<CharactersList />}
+                element={
+                  <CharactersProvider>
+                    <CharactersList />
+                  </CharactersProvider>
+                }
               />
               <Route
                 path='/character/:id'
