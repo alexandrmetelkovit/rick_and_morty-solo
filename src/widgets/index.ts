@@ -1,2 +1,2 @@
 export * from './CharacterCard/CharacterCard';
-export * from './FilterPanel/FilterPanel';
+export * from './FiltersPanel/FiltersPanel';

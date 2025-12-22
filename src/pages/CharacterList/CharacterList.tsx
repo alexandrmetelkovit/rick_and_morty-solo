@@ -4,7 +4,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { Loader } from '@/shared/components';
 import { useCharacters } from '@/hooks/useCharacters';
-import { CharacterCard, FilterPanel } from '@/widgets';
+import { CharacterCard, FiltersPanel } from '@/widgets';
 import bannerImg from '@/assets/images/page-content/banner.png';
 
 import './CharacterList.scss';
@@ -13,8 +13,9 @@ export const CharactersList = memo(() => {
   const {
     characters,
     hasMore,
-    isLoading,
     errorText,
+    isLoading,
+
     setPage,
     updatedCharacter
   } = useCharacters();
@@ -31,7 +32,7 @@ export const CharactersList = memo(() => {
       </div>
 
       <div className='characters__body'>
-        <FilterPanel />
+        <FiltersPanel />
 
         {isLoading && characters.length === 0 ? (
           <Loader

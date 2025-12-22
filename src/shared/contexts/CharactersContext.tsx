@@ -1,6 +1,5 @@
-import React, { createContext, useContext } from 'react';
-
 import type { ICharacterCard } from '@/widgets';
+import React, { createContext, useContext } from 'react';
 
 export interface ICharacterFilters {
   name: string;
@@ -10,18 +9,12 @@ export interface ICharacterFilters {
 }
 
 export interface ICharactersContextValue {
+  characters: ICharacterCard[];
+  setCharacters: React.Dispatch<React.SetStateAction<ICharacterCard[]>>;
+
   filters: ICharacterFilters;
   uiFilters: ICharacterFilters;
   updateFilter: (key: keyof ICharacterFilters, value: string) => void;
-
-  characters: ICharacterCard[];
-  page: number;
-  hasMore: boolean;
-  isLoading: boolean;
-  errorText: string;
-
-  setPage: React.Dispatch<React.SetStateAction<number>>;
-  updatedCharacter: (updated: Partial<ICharacterCard> & { id: number }) => void;
 }
 
 export const CharactersContext = createContext<ICharactersContextValue | null>(
