@@ -1,5 +1,6 @@
-import type { ICharacterCard } from '@/widgets';
 import React, { createContext, useContext } from 'react';
+
+import type { ICharacterCard } from '@/widgets';
 
 export interface ICharacterFilters {
   name: string;
@@ -11,6 +12,8 @@ export interface ICharacterFilters {
 export interface ICharactersContextValue {
   characters: ICharacterCard[];
   setCharacters: React.Dispatch<React.SetStateAction<ICharacterCard[]>>;
+
+  updatedCharacter: (updated: Partial<ICharacterCard> & { id: number }) => void;
 
   filters: ICharacterFilters;
   uiFilters: ICharacterFilters;

@@ -45,6 +45,7 @@ export const FiltersPanel = () => {
         onChange={handleSpeciesChange}
         options={SPECIES_OPTIONS}
       />
+
       <Select
         mode='medium'
         placeholder='Gender'

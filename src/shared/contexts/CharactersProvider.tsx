@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { useDebounce } from '@/hooks/useDebounce';
 
@@ -34,9 +34,27 @@ export const CharactersProvider = ({
     debouncedSetFilters(nextFilters);
   };
 
+  const updatedCharacter = useCallback(
+    (updated: Partial<ICharacterCard> & { id: number }) => {
+      setCharacters((prev) =>
+        prev.map((character) =>
+          character.id === updated.id ? { ...character, ...updated } : character
+        )
+      );
+    },
+    [setCharacters]
+  );
+
   return (
     <CharactersContext.Provider
-      value={{ characters, setCharacters, filters, uiFilters, updateFilter }}
+      value={{
+        characters,
+        setCharacters,
+        updatedCharacter,
+        filters,
+        uiFilters,
+        updateFilter
+      }}
     >
       {children}
     </CharactersContext.Provider>

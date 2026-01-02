@@ -1,7 +1,7 @@
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import { CharacterPage, CharactersList, NotFoundPage } from '@/pages';
+import { CharacterPage, NotFoundPage } from '@/pages';
 import {
   ErrorBoundary,
   Footer,
@@ -11,6 +11,7 @@ import {
 
 import './App.css';
 import { CharactersProvider } from './shared/contexts';
+import { CharactersPage } from './pages/CharactersPage/CharactersPage';
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
                 path='/'
                 element={
                   <CharactersProvider>
-                    <CharactersList />
+                    <CharactersPage />
                   </CharactersProvider>
                 }
               />

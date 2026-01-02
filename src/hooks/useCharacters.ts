@@ -1,30 +1,18 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-import type { ICharacterCard } from '@/widgets';
 import { getCharacters, getErrorMessage } from '@/shared/api';
 import { useCharactersContext } from '@/shared/contexts/CharactersContext';
 
 export const useCharacters = () => {
-  const { filters, characters, setCharacters } = useCharactersContext();
+  const { filters, setCharacters } = useCharactersContext();
 
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorText, setErrorText] = useState<string>('');
-
-  const updatedCharacter = useCallback(
-    (updated: Partial<ICharacterCard> & { id: number }) => {
-      setCharacters((prev) =>
-        prev.map((character) =>
-          character.id === updated.id ? { ...character, ...updated } : character
-        )
-      );
-    },
-    [setCharacters]
-  );
 
   useEffect(() => {
     const controller = new AbortController();
@@ -71,12 +59,9 @@ export const useCharacters = () => {
   }, [filters]);
 
   return {
-    characters,
     hasMore,
     isLoading,
     errorText,
-
-    setPage,
-    updatedCharacter
+    setPage
   };
 };
