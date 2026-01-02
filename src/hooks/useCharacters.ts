@@ -1,56 +1,18 @@
-import { useCallback, useEffect, useState, useTransition } from 'react';
+import { useEffect, useState } from 'react';
 
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
 import { getCharacters, getErrorMessage } from '@/shared/api';
-import type { ICharacterCard, ICharacterFilters } from '@/widgets';
-
-// import { useDebounce } from './useDebounce';
+import { useCharactersContext } from '@/shared/contexts/CharactersContext';
 
 export const useCharacters = () => {
-  const [characters, setCharacters] = useState<ICharacterCard[]>([]);
+  const { filters, setCharacters } = useCharactersContext();
+
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorText, setErrorText] = useState<string>('');
-  const [isPending, startTransition] = useTransition();
-
-  const [uiFilters, setUiFilters] = useState({
-    name: '',
-    species: '',
-    gender: '',
-    status: ''
-  });
-
-  const [filters, setFilters] = useState({
-    name: '',
-    species: '',
-    gender: '',
-    status: ''
-  });
-
-  // const debouncedSetFilters = useDebounce<ICharacterFilters>((nextFilters) => {
-  // setFilters(nextFilters);
-  // }, 500);
-
-  const handleFilterChange = (nextFilters: ICharacterFilters) => {
-    setUiFilters(nextFilters);
-
-    // debouncedSetFilters(nextFilters);
-    startTransition(() => setFilters(nextFilters));
-  };
-
-  const updatedCharacter = useCallback(
-    (updated: Partial<ICharacterCard> & { id: number }) => {
-      setCharacters((prev) =>
-        prev.map((character) =>
-          character.id === updated.id ? { ...character, ...updated } : character
-        )
-      );
-    },
-    []
-  );
 
   useEffect(() => {
     const controller = new AbortController();
@@ -70,7 +32,10 @@ export const useCharacters = () => {
 
         setHasMore(hasNextPage);
       } catch (error) {
-        if (axios.isCancel(error)) {
+        if (
+          axios.isCancel(error) ||
+          (axios.isAxiosError(error) && error.code === 'ECONNABORTED')
+        ) {
           return;
         }
 
@@ -87,23 +52,16 @@ export const useCharacters = () => {
     return () => {
       controller.abort();
     };
-  }, [page, filters]);
+  }, [page, filters, setCharacters]);
 
   useEffect(() => {
     setPage(1);
   }, [filters]);
 
   return {
-    characters,
     hasMore,
     isLoading,
     errorText,
-    isPending,
-
-    uiFilters,
-    onChangeFilters: handleFilterChange,
-
-    setPage,
-    updatedCharacter
+    setPage
   };
 };
