@@ -9,6 +9,22 @@ import { useCharactersContext } from '@/shared/contexts';
 
 import './CharactersList.scss';
 
+export interface EndListMessageProps {
+  hasMore: boolean;
+  characterCount: number;
+}
+
+export const EndListMessage = ({
+  hasMore,
+  characterCount
+}: EndListMessageProps) => {
+  if (!hasMore && characterCount > 1) {
+    return <p className='characters__list-end'>End of list</p>;
+  }
+
+  return null;
+};
+
 export const CharactersList = memo(() => {
   const { characters, updatedCharacter } = useCharactersContext();
 
@@ -22,9 +38,9 @@ export const CharactersList = memo(() => {
           text='Loading characters...'
         />
       ) : errorText ? (
-        <p className='characters__list_error'>{errorText}</p>
+        <p className='characters__list-error'>{errorText}</p>
       ) : characters.length === 0 ? (
-        <p className='characters__list_empty'>Character list is empty...</p>
+        <p className='characters__list-empty'>Character list is empty...</p>
       ) : (
         <InfiniteScroll
           dataLength={characters.length || 0}
@@ -32,16 +48,14 @@ export const CharactersList = memo(() => {
           hasMore={hasMore}
           loader={<Loader size='small' />}
           endMessage={
-            !hasMore &&
-            characters.length > 1 && (
-              <p style={{ textAlign: 'center', paddingTop: '20px' }}>
-                End of list
-              </p>
-            )
+            <EndListMessage
+              hasMore={hasMore}
+              characterCount={characters.length}
+            />
           }
           style={{ overflow: 'visible' }}
         >
-          <ol className='characters__list_items'>
+          <ol className='characters__list-items'>
             {characters.map((character) => (
               <li key={character.id}>
                 <CharacterCard

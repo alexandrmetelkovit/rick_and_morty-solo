@@ -1,13 +1,20 @@
 .characters__list {
-  &_error,
-  &_empty {
+  &-error,
+  &-empty {
     font-size: 30px;
     font-weight: 500;
     letter-spacing: 0.25px;
     text-align: center;
   }
 
-  &_items {
+  &-end {
+    padding-top: 20px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 20px;
+  }
+
+  &-items {
     display: flex;
     flex-wrap: wrap;
     gap: 28px;

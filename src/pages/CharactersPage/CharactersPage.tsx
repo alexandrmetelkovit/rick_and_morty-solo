@@ -1,8 +1,8 @@
 import { memo } from 'react';
 
-import { FiltersPanel } from '@/widgets';
 import bannerImg from '@/assets/images/page-content/banner.png';
 
+import { FiltersPanel } from './FiltersPanel/FiltersPanel';
 import { CharactersList } from './CharactersList/CharactersList';
 
 import './CharactersPage.scss';
