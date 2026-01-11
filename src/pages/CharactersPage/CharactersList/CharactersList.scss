@@ -1,0 +1,23 @@
+.characters__list {
+  &-error,
+  &-empty {
+    font-size: 30px;
+    font-weight: 500;
+    letter-spacing: 0.25px;
+    text-align: center;
+  }
+
+  &-end {
+    padding-top: 20px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 20px;
+  }
+
+  &-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    justify-content: center;
+  }
+}
