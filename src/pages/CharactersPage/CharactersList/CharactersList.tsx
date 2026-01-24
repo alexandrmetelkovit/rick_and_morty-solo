@@ -5,7 +5,6 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { CharacterCard } from '@/widgets';
 import { Loader } from '@/shared/components';
 import { useCharacters } from '@/hooks/useCharacters';
-import { useCharactersContext } from '@/shared/contexts';
 
 import './CharactersList.scss';
 
@@ -26,47 +25,51 @@ export const EndListMessage = ({
 };
 
 export const CharactersList = memo(() => {
-  const { characters, updatedCharacter } = useCharactersContext();
+  const { data, isLoading, isError, error, fetchNextPage, hasNextPage } =
+    useCharacters();
 
-  const { hasMore, isLoading, setPage, errorText } = useCharacters();
+  const characters = data?.pages.flatMap((page) => page.results) ?? [];
+
+  if (isLoading && characters.length === 0) {
+    return (
+      <Loader
+        size='medium'
+        text='Loading characters...'
+      />
+    );
+  }
+
+  if (isError) {
+    return <p className='characters__list-error'>{(error as Error).message}</p>;
+  }
+
+  if (characters.length === 0) {
+    return <p className='characters__list-empty'>Character list is empty...</p>;
+  }
 
   return (
     <div className='characters__list'>
-      {isLoading && characters.length === 0 ? (
-        <Loader
-          size='medium'
-          text='Loading characters...'
-        />
-      ) : errorText ? (
-        <p className='characters__list-error'>{errorText}</p>
-      ) : characters.length === 0 ? (
-        <p className='characters__list-empty'>Character list is empty...</p>
-      ) : (
-        <InfiniteScroll
-          dataLength={characters.length || 0}
-          next={() => setPage((page) => page + 1)}
-          hasMore={hasMore}
-          loader={<Loader size='small' />}
-          endMessage={
-            <EndListMessage
-              hasMore={hasMore}
-              characterCount={characters.length}
-            />
-          }
-          style={{ overflow: 'visible' }}
-        >
-          <ol className='characters__list-items'>
-            {characters.map((character) => (
-              <li key={character.id}>
-                <CharacterCard
-                  {...character}
-                  onUpdate={updatedCharacter}
-                />
-              </li>
-            ))}
-          </ol>
-        </InfiniteScroll>
-      )}
+      <InfiniteScroll
+        dataLength={characters.length || 0}
+        next={fetchNextPage}
+        hasMore={!!hasNextPage}
+        loader={<Loader size='small' />}
+        endMessage={
+          <EndListMessage
+            hasMore={!!hasNextPage}
+            characterCount={characters.length}
+          />
+        }
+        style={{ overflow: 'visible' }}
+      >
+        <ol className='characters__list-items'>
+          {characters.map((character) => (
+            <li key={character.id}>
+              <CharacterCard {...character} />
+            </li>
+          ))}
+        </ol>
+      </InfiniteScroll>
     </div>
   );
 });
