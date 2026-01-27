@@ -1,67 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useInfiniteQuery, type InfiniteData } from '@tanstack/react-query';
 
-import axios from 'axios';
-import toast from 'react-hot-toast';
-
-import { getCharacters, getErrorMessage } from '@/shared/api';
+import { getCharacters } from '@/shared/api';
 import { useCharactersContext } from '@/shared/contexts/CharactersContext';
+import type { ICharacterCard } from '@/widgets';
+
+type TCharactersResponse = {
+  results: ICharacterCard[];
+  hasNextPage: boolean;
+};
 
 export const useCharacters = () => {
-  const { filters, setCharacters } = useCharactersContext();
+  const { filters } = useCharactersContext();
 
-  const [page, setPage] = useState<number>(1);
-  const [hasMore, setHasMore] = useState<boolean>(true);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [errorText, setErrorText] = useState<string>('');
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    const fetchCharacters = async () => {
-      try {
-        setIsLoading(true);
-        setErrorText('');
-
-        const { results, hasNextPage } = await getCharacters(
-          page,
-          filters,
-          controller.signal
-        );
-
-        setCharacters((prev) => (page === 1 ? results : [...prev, ...results]));
-
-        setHasMore(hasNextPage);
-      } catch (error) {
-        if (
-          axios.isCancel(error) ||
-          (axios.isAxiosError(error) && error.code === 'ECONNABORTED')
-        ) {
-          return;
-        }
-
-        const message = getErrorMessage(error);
-        setErrorText(message);
-        toast.error(message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchCharacters();
-
-    return () => {
-      controller.abort();
-    };
-  }, [page, filters, setCharacters]);
-
-  useEffect(() => {
-    setPage(1);
-  }, [filters]);
-
-  return {
-    hasMore,
-    isLoading,
-    errorText,
-    setPage
-  };
+  return useInfiniteQuery<
+    TCharactersResponse,
+    Error,
+    InfiniteData<TCharactersResponse>,
+    ['characters', typeof filters],
+    number
+  >({
+    queryKey: ['characters', filters],
+    initialPageParam: 1,
+    queryFn: ({ pageParam, signal }) =>
+      getCharacters(pageParam, filters, signal),
+    getNextPageParam: (lastPage, allPages) =>
+      lastPage.hasNextPage ? allPages.length + 1 : undefined
+  });
 };

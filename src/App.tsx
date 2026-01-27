@@ -9,9 +9,10 @@ import {
   PageContent
 } from '@/shared/components';
 
-import './App.css';
 import { CharactersProvider } from './shared/contexts';
 import { CharactersPage } from './pages/CharactersPage/CharactersPage';
+
+import './App.css';
 
 function App() {
   return (
