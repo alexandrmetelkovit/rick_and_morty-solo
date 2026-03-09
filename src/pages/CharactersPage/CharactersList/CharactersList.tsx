@@ -40,7 +40,7 @@ export const CharactersList = memo(() => {
   }
 
   if (isError) {
-    return <p className='characters__list-error'>{(error as Error).message}</p>;
+    return <p className='characters__list-error'>{error.message}</p>;
   }
 
   if (characters.length === 0) {
