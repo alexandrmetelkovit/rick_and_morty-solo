@@ -1,18 +1,3 @@
-// {
-//   "extends": "./tsconfig.app.json", // Берём базу из основного конфига приложения
-//   "compilerOptions": {
-//     "verbatimModuleSyntax": false, // Отключаем строгий режим для тестов
-//     "esModuleInterop": true, // Включаем совместимость модулей
-//     "jsx": "react-jsx", // Для поддержки React компонентов
-//     "types": ["jest", "@testing-library/jest-dom"] // ← добавить эту строку
-//   },
-//   "include": [
-//     "src/**/*.test.ts", // Только тестовые файлы
-//     "src/**/*.spec.ts",
-//     "src/**/__tests__/**/*"
-//   ]
-// }
-
 {
   "extends": "./tsconfig.app.json",
   "compilerOptions": {
@@ -24,7 +9,7 @@
   "include": [
     "src/**/*.test.ts",
     "src/**/*.spec.ts",
-    "src/**/*.d.ts", // ← добавить
+    "src/**/*.d.ts",
     "src/**/__tests__/**/*"
   ]
 }
