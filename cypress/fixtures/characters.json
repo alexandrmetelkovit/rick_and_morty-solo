@@ -1,0 +1,95 @@
+{
+  "info": {
+    "count": 1,
+    "pages": 1,
+    "next": null,
+    "prev": null
+  },
+  "results": [
+    {
+      "id": 1,
+      "name": "Rick Sanchez",
+      "gender": "Male",
+      "species": "Human",
+      "location": {
+        "name": "Citadel of Ricks",
+        "url": "https://rickandmortyapi.com/api/location/3"
+      },
+      "status": "Alive",
+      "image": "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+      "type": "",
+      "origin": {
+        "name": "Earth (C-137)",
+        "url": "https://rickandmortyapi.com/api/location/1"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Morty Smith",
+      "gender": "Male",
+      "species": "Human",
+      "location": {
+        "name": "Citadel of Ricks",
+        "url": "https://rickandmortyapi.com/api/location/3"
+      },
+      "status": "Alive",
+      "image": "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
+      "type": "",
+      "origin": {
+        "name": "Earth (C-137)",
+        "url": "https://rickandmortyapi.com/api/location/1"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Summer Smith",
+      "gender": "Female",
+      "species": "Human",
+      "location": {
+        "name": "Earth (Replacement Dimension)",
+        "url": "https://rickandmortyapi.com/api/location/20"
+      },
+      "status": "Alive",
+      "image": "https://rickandmortyapi.com/api/character/avatar/3.jpeg",
+      "type": "",
+      "origin": {
+        "name": "Earth (Replacement Dimension)",
+        "url": "https://rickandmortyapi.com/api/location/20"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Beth Smith",
+      "gender": "Female",
+      "species": "Human",
+      "location": {
+        "name": "Earth (Replacement Dimension)",
+        "url": "https://rickandmortyapi.com/api/location/20"
+      },
+      "status": "Alive",
+      "image": "https://rickandmortyapi.com/api/character/avatar/4.jpeg",
+      "type": "",
+      "origin": {
+        "name": "Earth (Replacement Dimension)",
+        "url": "https://rickandmortyapi.com/api/location/20"
+      }
+    },
+    {
+      "id": 5,
+      "name": "Jerry Smith",
+      "gender": "Male",
+      "species": "Human",
+      "location": {
+        "name": "Earth (Replacement Dimension)",
+        "url": "https://rickandmortyapi.com/api/location/20"
+      },
+      "status": "Alive",
+      "image": "https://rickandmortyapi.com/api/character/avatar/5.jpeg",
+      "type": "",
+      "origin": {
+        "name": "Earth (Replacement Dimension)",
+        "url": "https://rickandmortyapi.com/api/location/20"
+      }
+    }
+  ]
+}

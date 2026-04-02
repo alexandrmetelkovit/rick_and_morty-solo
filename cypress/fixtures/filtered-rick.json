@@ -1,0 +1,21 @@
+{
+  "info": {
+    "count": 1,
+    "pages": 1,
+    "next": null,
+    "prev": null
+  },
+  "results": [
+    {
+      "id": 1,
+      "name": "Rick Sanchez",
+      "gender": "Male",
+      "species": "Human",
+      "location": { "name": "Citadel of Ricks", "url": "" },
+      "status": "Alive",
+      "image": "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+      "type": "",
+      "origin": { "name": "Earth (C-137)", "url": "" }
+    }
+  ]
+}

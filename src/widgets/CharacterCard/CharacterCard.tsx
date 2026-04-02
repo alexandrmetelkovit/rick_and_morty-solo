@@ -128,6 +128,7 @@ export const CharacterCard = memo(
           className={cn('characterCard', {
             characterCard_edit: isEdit
           })}
+          data-testid='characterCard'
         >
           <div className='characterCard__imageWrapper'>
             <img
